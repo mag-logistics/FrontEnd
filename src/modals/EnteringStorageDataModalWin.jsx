@@ -35,7 +35,7 @@ function enteringStorageDataModalWin(modalItem) {
     magicCreaturesSpeciesPlaceholder.disabled = true;
     magicCreaturesSpeciesPlaceholder.selected = true;
     magicCreaturesSpecies.appendChild(magicCreaturesSpeciesPlaceholder);
-    for (let i = 0; i < magicCreaturesName.length; i++) {
+    for (let i = 0; i < magicCreaturesList.length; i++) {
         let option = document.createElement("option");
         option.value = magicCreaturesList[i];
         option.text = magicCreaturesList[i];
@@ -49,7 +49,7 @@ function enteringStorageDataModalWin(modalItem) {
     let magicCreaturesStorage = document.createElement("select");
     let magicCreaturesStoragePlaceholder = document.createElement("option");
     magicCreaturesStoragePlaceholder.value = "";
-    magicCreaturesStoragePlaceholder.text = "Вид";
+    magicCreaturesStoragePlaceholder.text = "Место хранения";
     magicCreaturesStoragePlaceholder.disabled = true;
     magicCreaturesStoragePlaceholder.selected = true;
     magicCreaturesStorage.appendChild(magicCreaturesStoragePlaceholder);

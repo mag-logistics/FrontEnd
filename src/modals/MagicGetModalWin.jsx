@@ -18,6 +18,7 @@ function openMagicGetModalWin(modalItem) {
     let magicVolume = document.createElement("input");
     magicVolume.placeholder = "Объем магии";
     magicVolume.type = "number";
+    magicVolume.min = "0";
 
     let magicEndDate = document.createElement("input");
     magicEndDate.placeholder = "Срок";
@@ -38,8 +39,6 @@ function openMagicGetModalWin(modalItem) {
     }
     magicIndex.addEventListener("change", () => {
         magicIndexSelected = this.value;
-        // todo remove after test
-        console.log("Выбрано:", magicIndexSelected);
     })
 
     let magicAdditionDescription = document.createElement("input");

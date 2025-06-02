@@ -37,8 +37,6 @@ function getRequestForExhaustionModalWin(modalItem) {
     }
     magicIndex.addEventListener("change", () => {
         magicIndexSelected = this.value;
-        // todo remove after test
-        console.log("Выбрано:", magicIndexSelected);
     })
 
     let applyBtn = document.createElement("button");
