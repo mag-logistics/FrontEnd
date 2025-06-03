@@ -10,8 +10,8 @@ function openMagicGetModalWin(modalItem) {
         "4",
         "5"
     ]
-    let magicIndexSelected = null;
 
+    let magicIndexSelected = null;
     modalItem['modalTitle'].textContent = "Подача заявки на получение магии";
     let text = document.createElement("p");
 
@@ -37,8 +37,8 @@ function openMagicGetModalWin(modalItem) {
         option.text = magicIndexList[i];
         magicIndex.appendChild(option);
     }
-    magicIndex.addEventListener("change", () => {
-        magicIndexSelected = this.value;
+    magicIndex.addEventListener("change", (event) => {
+        magicIndexSelected = event.target.value;
     })
 
     let magicAdditionDescription = document.createElement("input");
@@ -49,16 +49,19 @@ function openMagicGetModalWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        // todo post-endpoint add
-        api.post("", {
-            magicVolume: magicVolume.value,
-            magicEndDate: magicEndDate.value,
-            magicIndex: magicIndex.value,
-            magicAdditionDescription: magicAdditionDescription.value
-        }).then(res => {
-            console.log(res.data);
-            modalItem["modalTeg"].dispatchEvent(new Event("custom-change"));
-        })
+        // api.post("mage/order/create", {
+        //     magicVolume: magicVolume.value,
+        //     magicEndDate: magicEndDate.value,
+        //     magicIndex: magicIndexSelected,
+        //     magicAdditionDescription: magicAdditionDescription.value
+        // }).then(res => {
+        //     console.log(res.data);
+        //     let event = new CustomEvent("close_event");
+        //     modalItem["modalTeg"].dispatchEvent(event);
+        // })
+        console.log(magicIndexSelected)
+        let event = new CustomEvent("close_event");
+        modalItem["modalTeg"].dispatchEvent(event);
     })
 
     modalItem["modalBody"].appendChild(text);

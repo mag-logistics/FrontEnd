@@ -2,7 +2,9 @@ import openMagicGetModalWin from "./modals/MagicGetModalWin.jsx";
 import enteringStorageDataModalWin from "./modals/EnteringStorageDataModalWin.jsx";
 import getRequestForExhaustionModalWin from "./modals/GetRequestForExhaustionModalWin.jsx";
 import AdditionalInformationWin from "./modals/AdditionalInformationWin.jsx";
-import {captureOwnerStack} from "react";
+import AddNewUserModalWin from "./modals/AddNewUserModalWin.jsx";
+import GetMagicAnimalModalWin from "./modals/GetMagicAnimalModalWin.jsx";
+import AddExhaustionResultModalWin from "./modals/AddExhaustionResultModalWin.jsx";
 
 function ModalWindowManager(title, content) {
     let windowItemDict = {
@@ -23,15 +25,15 @@ function ModalWindowManager(title, content) {
 
     window.addEventListener("click", (event) => {
         if (event.target === windowItemDict['modalTeg']){
-            console.log('close')
             closeModal();
         }
     })
 
-    console.log(title)
-
     if (title === 'get_magic_req') {
         openMagicGetModalWin(windowItemDict);
+    }
+    else if (title === 'get_magic_animal'){
+        GetMagicAnimalModalWin(windowItemDict);
     }
     else if (title === 'set_animal_storage_info') {
         enteringStorageDataModalWin(windowItemDict);
@@ -42,10 +44,15 @@ function ModalWindowManager(title, content) {
     else if (title === 'get_additional_info') {
         AdditionalInformationWin(windowItemDict)
     }
+    else if (title === 'add_new_user'){
+        AddNewUserModalWin(windowItemDict)
+    }
+    else if (title === 'add_exhaustion_result') {
+        AddExhaustionResultModalWin(windowItemDict)
+    }
 
-    windowItemDict['modalTeg'].addEventListener('change', () => {
-        // closeModal();
-        console.log('change');
+    windowItemDict['modalTeg'].addEventListener('close_event', () => {
+        closeModal();
     })
 }
 

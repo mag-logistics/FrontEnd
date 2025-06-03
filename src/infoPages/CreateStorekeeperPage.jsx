@@ -8,7 +8,7 @@ function CreateStorekeeperPage() {
 
     useEffect(() => {
         async function fetchExhaustionData() {
-            const exhaustionPageData = api.get('');
+            const exhaustionPageData = api.get('storer/orders');
             const data = [
                 { number: '№1234', date: '10.02.2002', status: 'Новая', details: 'Подробные характери...' },
                 { number: '№5678', date: '11.02.2002', status: 'В обработке', details: 'Ещё данные...' },
@@ -25,7 +25,7 @@ function CreateStorekeeperPage() {
                             hunter_btn={null}
             />
             <h1>Заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app} />
+            <InfoTableConstruction title={'get_additional_info'} applications={app} role={'storekeeper'}/>
         </div>
     )
 }

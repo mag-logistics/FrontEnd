@@ -17,6 +17,7 @@ function getRequestForExhaustionModalWin(modalItem) {
     let magicVolume = document.createElement("input");
     magicVolume.placeholder = "Объем магии";
     magicVolume.type = "number";
+    magicVolume.min = "0";
 
     let magicEndDate = document.createElement("input");
     magicEndDate.placeholder = "Срок";
@@ -35,23 +36,25 @@ function getRequestForExhaustionModalWin(modalItem) {
         option.text = magicIndexList[i];
         magicIndex.appendChild(option);
     }
-    magicIndex.addEventListener("change", () => {
-        magicIndexSelected = this.value;
+    magicIndex.addEventListener("change", (event) => {
+        magicIndexSelected = event.target.value;
     })
 
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
-        // todo post-endpoint add
-        api.post("", {
-            magicVolume: magicVolume.value,
-            magicEndDate: magicEndDate.value,
-            magicIndex: magicIndexSelected,
-        }).then(res => {
-            console.log(res.data);
-            console.log("Заявка подана!");
-            modalItem["modalTeg"].dispatchEvent(new Event("custom-change"));
-        })
+        // api.post("exhaustion/order/create", {
+        //     magicVolume: magicVolume.value,
+        //     magicEndDate: magicEndDate.value,
+        //     magicIndex: magicIndexSelected,
+        // }).then(res => {
+        //     console.log(res.data);
+        //     let event = new CustomEvent('close_event')
+        //     modalItem["modalTeg"].dispatchEvent(event);
+        // })
+
+        let event = new CustomEvent('close_event')
+        modalItem["modalTeg"].dispatchEvent(event);
     })
 
     modalItem["modalBody"].appendChild(text);

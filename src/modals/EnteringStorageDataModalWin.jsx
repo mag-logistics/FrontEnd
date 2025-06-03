@@ -3,7 +3,7 @@ import api from '../utils/api.js'
 
 
 function enteringStorageDataModalWin(modalItem) {
-    let magicCreaturesList = [
+    let magicCreaturesList = [ // todo api request from back
         "Кристальные пауки",
         "Лесных духов",
         "Болотные кикиморы",
@@ -11,82 +11,59 @@ function enteringStorageDataModalWin(modalItem) {
         "Болотных кикимор"
     ]
 
-    let magicCreatureStorageList = [
-        "Склад-1",
-        "Склад-2",
-        "Склад-3",
-        "Склад-4",
-        "Склад-5"
-    ]
-
     modalItem['modalTitle'].textContent = "Данные о месте хранения магических существ"
-    let magicCreaturesSpeciesSelected = null;
-    let magicCreaturesStorageSelected = null;
+    let magicCreaturesNameSelected = null;
 
     let text = document.createElement("p");
-    let magicCreaturesName = document.createElement("input");
-    magicCreaturesName.placeholder = "Наименование магического существа";
-    magicCreaturesName.type = "text";
 
-    let magicCreaturesSpecies = document.createElement("select");
-    let magicCreaturesSpeciesPlaceholder = document.createElement("option");
-    magicCreaturesSpeciesPlaceholder.value = "";
-    magicCreaturesSpeciesPlaceholder.text = "Вид";
-    magicCreaturesSpeciesPlaceholder.disabled = true;
-    magicCreaturesSpeciesPlaceholder.selected = true;
-    magicCreaturesSpecies.appendChild(magicCreaturesSpeciesPlaceholder);
+    let magicCreaturesName = document.createElement("select");
+    let magicCreaturesNamePlaceholder = document.createElement("option");
+    magicCreaturesNamePlaceholder.value = "";
+    magicCreaturesNamePlaceholder.text = "Наименование магического существа";
+    magicCreaturesNamePlaceholder.disabled = true;
+    magicCreaturesNamePlaceholder.selected = true;
+    magicCreaturesName.appendChild(magicCreaturesNamePlaceholder);
     for (let i = 0; i < magicCreaturesList.length; i++) {
         let option = document.createElement("option");
         option.value = magicCreaturesList[i];
         option.text = magicCreaturesList[i];
-        magicCreaturesSpecies.appendChild(option);
+        magicCreaturesName.appendChild(option);
     }
-    magicCreaturesSpecies.addEventListener("change", () => {
-        magicCreaturesSpeciesSelected = this.value;
-        console.log("Выбрано:", magicCreaturesSpeciesSelected);
+    magicCreaturesName.addEventListener("change", (event) => {
+        magicCreaturesNameSelected = event.target.value;
     })
 
-    let magicCreaturesStorage = document.createElement("select");
-    let magicCreaturesStoragePlaceholder = document.createElement("option");
-    magicCreaturesStoragePlaceholder.value = "";
-    magicCreaturesStoragePlaceholder.text = "Место хранения";
-    magicCreaturesStoragePlaceholder.disabled = true;
-    magicCreaturesStoragePlaceholder.selected = true;
-    magicCreaturesStorage.appendChild(magicCreaturesStoragePlaceholder);
-    for (let i = 0; i < magicCreatureStorageList.length; i++) {
-        let option = document.createElement("option");
-        option.value = magicCreatureStorageList[i];
-        option.text = magicCreatureStorageList[i];
-        magicCreaturesStorage.appendChild(option);
-    }
-    magicCreaturesStorage.addEventListener("change", () => {
-        magicCreaturesStorageSelected = this.value;
-        console.log("Выбрано:", magicCreaturesStorageSelected);
-    })
+    let magicCreaturesCount = document.createElement("input");
+    magicCreaturesCount.placeholder = "Количество магических существ";
+    magicCreaturesCount.type = "number";
+    magicCreaturesCount.min = "1";
+
+    let magicCreaturesStorage = document.createElement("input");
+    magicCreaturesStorage.type = "text";
+    magicCreaturesStorage.placeholder = "Место хранения";
 
     let storageSaveBtn = document.createElement("button");
     storageSaveBtn.textContent = "Сохранить данные";
     storageSaveBtn.addEventListener("click", () =>  {
-        // todo post-endpoint add
-        if (magicCreaturesSpeciesSelected === null && magicCreaturesStorageSelected === null) {
+        if (magicCreaturesNameSelected === null) {
             console.log("Не заполнены поля!");
         }
         else {
-            api.post("", {
-                magicCreaturesName: magicCreaturesName.value,
-                magicCreaturesSpecies: magicCreaturesSpeciesSelected,
-                magicCreaturesStorage: magicCreaturesStorageSelected
+            api.post("hunter/order/create", { // todo so-so xd
+                magicCreaturesName: magicCreaturesNameSelected,
+                magicCreaturesCount: magicCreaturesCount.value,
+                magicCreaturesStorage: magicCreaturesStorage.value
             }).then(res => {
                 console.log(res.data);
             })
             console.log("Заявка подана!");
-            modalItem["modalTeg"].dispatchEvent(new Event("custom-change"));
+            modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
         }
     })
 
     modalItem["modalBody"].appendChild(text);
     modalItem["modalBody"].appendChild(magicCreaturesName);
-    modalItem["modalBody"].appendChild(magicCreaturesSpecies);
+    modalItem["modalBody"].appendChild(magicCreaturesCount);
     modalItem["modalBody"].appendChild(magicCreaturesStorage);
     modalItem["modalBody"].appendChild(storageSaveBtn);
     modalItem["modalTeg"].style.display = "block";

@@ -8,7 +8,7 @@ function CreateHunterPage() {
 
     useEffect(() => {
         async function fetchHunterData() {
-            const hunterPageData = api.get('');
+            const hunterPageData = api.get('hunter/orders');
             const data = [
                 { number: '№1234', date: '10.02.2002', status: 'Новая', details: 'Подробные характери...' },
                 { number: '№5678', date: '11.02.2002', status: 'В обработке', details: 'Ещё данные...' },
@@ -24,7 +24,7 @@ function CreateHunterPage() {
                             btn_name={'Добавить новую информацию по магическому существу'}
                             hunter_btn={'set_animal_storage_info'}/>
             <h1>Заявки на магическое существо</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
+            <InfoTableConstruction title={'get_additional_info'} applications={app} role={'hunter'}/>
         </div>
     )
 }

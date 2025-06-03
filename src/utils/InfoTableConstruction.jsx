@@ -1,6 +1,6 @@
 import ModalWindowManager from "../ModalWindowManager.jsx";
 
-function infoTableConstruction({title, applications}) {
+function infoTableConstruction({title, applications, role}) {
     return (
         <div>
             <div>
@@ -24,7 +24,8 @@ function infoTableConstruction({title, applications}) {
                         number: app.number,
                         date: app.date,
                         status: app.status,
-                        details: app.details
+                        details: app.details,
+                        role: role,
                     })} className="btn">Обработать</button></div>
                 </div>
             ))}
