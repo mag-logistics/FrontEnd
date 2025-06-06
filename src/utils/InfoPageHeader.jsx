@@ -2,19 +2,19 @@ import ModalWindowManager from "../ModalWindowManager.jsx";
 import {LoginOut} from "../LoginPage.jsx";
 import React from "react";
 
-function InfoPageHeader({req_name, btn_name, hunter_btn }) {
+function InfoPageHeader({req_name, btn_name, hunter_btn}) {
     return (
         <div id="InfoPageHeader">
-            {/*{*/}
-            {/*    req_name !== null && (*/}
-            {/*        <button*/}
-            {/*            onClick={() => ModalWindowManager(req_name, null)}*/}
-            {/*            className="info_button"*/}
-            {/*        >*/}
-            {/*            { btn_name }*/}
-            {/*        </button>*/}
-            {/*    )*/}
-            {/*}*/}
+            {
+                req_name !== null && (
+                    <button
+                        onClick={() => ModalWindowManager(req_name, null)}
+                        className="info_button"
+                    >
+                        { btn_name }
+                    </button>
+                )
+            }
             {
                 hunter_btn !== null && hunter_btn === 'set_animal_storage_info' && (
                     <button onClick={() => ModalWindowManager(hunter_btn, null)}

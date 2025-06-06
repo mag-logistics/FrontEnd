@@ -5,12 +5,13 @@ import {node} from "globals";
 function AdditionalInformationWin(modalItem) {
     let req = null;
     let modal_create = () => {
-        console.log('create')
+        // console.log('create')
         let event = new CustomEvent('close_event');
         modalItem["modalTeg"].dispatchEvent(event);
         ModalWindowManager(req, null)
     }
 
+    console.log(modalItem);
     modalItem['modalTitle'].textContent = "Информация о заявке";
     let text = document.createElement("p");
 
@@ -50,11 +51,13 @@ function AdditionalInformationWin(modalItem) {
         // }
     })
 
+    console.log(modalItem['content']['number']);
+
     if (modalItem['content']['role'] === 'hunter') {
-        apply_btn.textContent = "Проверить наличие магии";
+        apply_btn.textContent = "Проверить наличие магического существа на складе";
         requst_btn.textContent = "Подача заявки на высасывание магии";
         req = 'get_request_for_exhaustion';
-    } else if (modalItem['content']['role'] === 'exhaustion') {
+    } else if (modalItem['content']['role'] === 'exhaustion') {    // todo (Добавить условие, чтобы кнопки внести данные о высосанной магии не отображались, когда статус заявки уже DONE)
         apply_btn.style.display = "none";
         requst_btn.className = "save-btn";
         requst_btn.disabled = false;

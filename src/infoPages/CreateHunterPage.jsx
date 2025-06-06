@@ -7,21 +7,24 @@ function CreateHunterPage() {
     let [app, setApp] = useState([]);
 
     useEffect(() => {
-        async function fetchHunterData() {
-            const hunterPageData = api.get('hunter/orders');
-            const data = [
-                { number: '№1234', date: '10.02.2002', status: 'Новая', details: 'Подробные характери...' },
-                { number: '№5678', date: '11.02.2002', status: 'В обработке', details: 'Ещё данные...' },
-            ];
-            setApp(data);
-        }
+        const fetchHunterData = async () => {
+            const response = await fetch(`http://localhost:8080/api/hunter/orders`);
+            if (response.ok) {
+                const result = await response.json();
+                setApp(result);
+            } else {
+                const result = await response.json();
+                console.error("Ошибка сети: " + result);
+            }
+        };
         fetchHunterData();
     }, [])
 
+
     return (
         <div className="container">
-            <InfoPageHeader req_name={'get_request_for_exhaustion'}
-                            btn_name={'Добавить новую информацию по магическому существу'}
+            <InfoPageHeader req_name={null}
+                            btn_name={null}
                             hunter_btn={'set_animal_storage_info'}/>
             <h1>Заявки на магическое существо</h1>
             <InfoTableConstruction title={'get_additional_info'} applications={app} role={'hunter'}/>

@@ -49,16 +49,16 @@ function openMagicGetModalWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        // api.post("mage/order/create", {
-        //     magicVolume: magicVolume.value,
-        //     magicEndDate: magicEndDate.value,
-        //     magicIndex: magicIndexSelected,
-        //     magicAdditionDescription: magicAdditionDescription.value
-        // }).then(res => {
-        //     console.log(res.data);
-        //     let event = new CustomEvent("close_event");
-        //     modalItem["modalTeg"].dispatchEvent(event);
-        // })
+        api.post("http://localhost:8080/api/mage/order/create", {
+            quantity: magicVolume.value,
+            deadline: magicEndDate.value,
+            magicId: magicIndexSelected.toString(),
+            title: magicAdditionDescription.value
+        }).then(res => {
+            console.log(res.data);
+            let event = new CustomEvent("close_event");
+            modalItem["modalTeg"].dispatchEvent(event);
+        })
         console.log(magicIndexSelected)
         let event = new CustomEvent("close_event");
         modalItem["modalTeg"].dispatchEvent(event);

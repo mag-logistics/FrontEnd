@@ -77,6 +77,7 @@ function AdditionalInformationWin(modalItem) {
     modalItem["modalBody"].appendChild(newUserPassword);
     modalItem["modalBody"].appendChild(newUserEmail);
     modalItem["modalBody"].appendChild(newUserRole);
+    modalItem["modalBody"].appendChild(userAddBtn);
     modalItem["modalTeg"].style.display = "block";
 }
 

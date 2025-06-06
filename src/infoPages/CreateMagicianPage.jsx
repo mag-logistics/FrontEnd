@@ -6,25 +6,27 @@ import ModalWindowManager from "../ModalWindowManager.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 
 function CreateMagicianPage() {
-    // let [applications, setApplications] = useState([]);
-    //
-    // useEffect(() => {
-    //     async function fetchMagicianData() {
-    //         //const magicianPageData = api.get('storer/orders');
-    //         const data = [
-    //             { number: '№1234', date: '10.02.2002', status: 'Новая', details: 'Подробные характери...' },
-    //             { number: '№5678', date: '11.02.2002', status: 'В обработке', details: 'Ещё данные...' },
-    //         ];
-    //         setApplications(data);
-    //     }
-    //     fetchMagicianData();
-    // }, [])
+    let [applications, setApplications] = useState([]);
+
+    useEffect(() => {
+        const fetchMagicianData = async () => {
+            const response = await fetch(`http://localhost:8080/api/mage/orders`);  //todo
+            if (response.ok) {
+                const result = await response.json();
+                setApplications(result);
+            } else {
+                const result = await response.json();
+                console.error("Ошибка сети: " + result);
+            }
+        };
+        fetchMagicianData();
+    }, [])
 
     return (
         <div className="conteiner">
             <InfoPageHeader  req_name={'get_magic_req'} btn_name={'Создать заявку на магию'} hunter_btn={'add_new_user'}/>
-            {/*<h1>Заявки на магию</h1>*/}
-            {/*<InfoTableConstruction title={'get_additional_info'} applications={applications} />*/}
+            <h1>Заявки на магию</h1>
+            <InfoTableConstruction title={'get_additional_info'} applications={applications} />
         </div>
     )
 }

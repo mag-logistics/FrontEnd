@@ -16,15 +16,15 @@ function infoTableConstruction({title, applications, role}) {
 
             {applications.map((app, index) => (
                 <div className="row" key={index}>
-                    <div>{app.number}</div>
-                    <div>{app.date}</div>
+                    <div>{app.id}</div>
+                    <div>{app.deadline}</div>
                     <div>{app.status}</div>
-                    <div>{app.details}</div>
+                    <div>{app.title}</div>
                     <div><button onClick={() => ModalWindowManager(title, {
-                        number: app.number,
-                        date: app.date,
+                        number: app.id,
+                        date: app.deadline,
                         status: app.status,
-                        details: app.details,
+                        details: app.title,
                         role: role,
                     })} className="btn">Обработать</button></div>
                 </div>

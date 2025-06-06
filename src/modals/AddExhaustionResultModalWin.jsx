@@ -1,4 +1,5 @@
 import app from "../App.jsx";
+import api from "../utils/api.js";
 
 function AddExhaustionResultModalWin(modalItem) {
     let magicIndexList = [
@@ -39,12 +40,18 @@ function AddExhaustionResultModalWin(modalItem) {
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Сохранить данные";
     applyBtn.className = "applyBtn";
-    applyBtn.addEventListener("click", () => {
-        // api.post("", {} todo right api + param
-        // ).then(res => {
-        //     console.log(res.data);
-        //     modalItem["modalTeg"].dispatchEvent(new CustomEvent('close_event'));
-        // })
+    applyBtn.addEventListener("click", () =>  {
+        api.post("http://localhost:8080/api/exhaustion/magic/add?orderId=b888a27d-9bbb-4eae-9ec6-1744578af390", {      // todo добавить сюда отправку конкретного id в параметры запроса
+            id: magicIndex.value,
+            volume: magicVolume.value
+        }).then(res => {
+            console.log(res.data);
+            let event = new CustomEvent('close_event')
+            modalItem["modalTeg"].dispatchEvent(event);
+        })
+
+        let event = new CustomEvent('close_event')
+        modalItem["modalTeg"].dispatchEvent(event);
     })
 
     modalItem["modalBody"].appendChild(text);

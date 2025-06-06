@@ -43,15 +43,16 @@ function getRequestForExhaustionModalWin(modalItem) {
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
-        // api.post("exhaustion/order/create", {
-        //     magicVolume: magicVolume.value,
-        //     magicEndDate: magicEndDate.value,
-        //     magicIndex: magicIndexSelected,
-        // }).then(res => {
-        //     console.log(res.data);
-        //     let event = new CustomEvent('close_event')
-        //     modalItem["modalTeg"].dispatchEvent(event);
-        // })
+        api.post("http://localhost:8080/api/hunter/order/create", {
+            magicId: magicIndex.value,
+            title: "Описание",
+            deadline: magicEndDate.value,
+            quantity: magicVolume.value,
+        }).then(res => {
+            console.log(res.data);
+            let event = new CustomEvent('close_event')
+            modalItem["modalTeg"].dispatchEvent(event);
+        })
 
         let event = new CustomEvent('close_event')
         modalItem["modalTeg"].dispatchEvent(event);

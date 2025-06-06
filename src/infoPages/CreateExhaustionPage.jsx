@@ -6,20 +6,19 @@ import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 function CreateExhaustionPage() {
     let [app, setApp] = useState([]);
 
-    async function fetchExhaustionData() {
-        const exhaustionPageData = api.get('exhaustion/orders');
-        const data = [
-            { number: '№1234', date: '10.02.2002', status: 'Новая', details: 'Подробные характери...' },
-            { number: '№5678', date: '11.02.2002', status: 'В обработке', details: 'Ещё данные...' },
-        ];
-        setApp(data);
-    }
-
     useEffect(() => {
+        const fetchExhaustionData = async () => {
+            const response = await fetch(`http://localhost:8080/api/exhaustion/orders`);
+            if (response.ok) {
+                const result = await response.json();
+                setApp(result);
+            } else {
+                const result = await response.json();
+                console.error("Ошибка сети: " + result);
+            }
+        };
         fetchExhaustionData();
     }, [])
-
-    // window.addEventListener("", fetchExhaustionData);
 
     return (
         <div className="container">

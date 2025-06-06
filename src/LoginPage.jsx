@@ -19,13 +19,13 @@ function LoginPage() {
         let user = username;
         let role = null;
 
-        if (user === "magician") {
+        if (user === "magician" && password === "magician") {
             role = "magician";
-        } else if (user === "exhaustion") {
+        } else if (user === "exhaustion" && password === "exhaustion") {
             role = "exhaustion";
-        } else if (user === "hunter") {
+        } else if (user === "hunter" && password === "hunter") {
             role = "hunter";
-        } else if (user === "storekeeper"){
+        } else if (user === "storekeeper" && password === "storekeeper"){
             role = "storekeeper";
         } else {
             alert("Неверный логин или пароль");
