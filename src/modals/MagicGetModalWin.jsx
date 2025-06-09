@@ -49,7 +49,7 @@ function openMagicGetModalWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        api.post("http://localhost:8080/api/mage/order/create", {
+        api.post("/mage/order/create", {
             quantity: magicVolume.value,
             deadline: magicEndDate.value,
             magicId: magicIndexSelected.toString(),

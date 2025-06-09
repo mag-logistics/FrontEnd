@@ -40,8 +40,10 @@ function AddExhaustionResultModalWin(modalItem) {
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Сохранить данные";
     applyBtn.className = "applyBtn";
+    console.log(modalItem)
+    console.log(modalItem['content'])
     applyBtn.addEventListener("click", () =>  {
-        api.post("http://localhost:8080/api/exhaustion/magic/add?orderId=b888a27d-9bbb-4eae-9ec6-1744578af390", {      // todo добавить сюда отправку конкретного id в параметры запроса
+        api.put(`/exhaustion/magic/add?orderId=${modalItem.content.number}`, {      // todo добавить сюда отправку конкретного id в параметры запроса
             id: magicIndex.value,
             volume: magicVolume.value
         }).then(res => {

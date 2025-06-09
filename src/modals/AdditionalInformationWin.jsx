@@ -8,7 +8,7 @@ function AdditionalInformationWin(modalItem) {
         // console.log('create')
         let event = new CustomEvent('close_event');
         modalItem["modalTeg"].dispatchEvent(event);
-        ModalWindowManager(req, null)
+        ModalWindowManager(req, modalItem['content'])
     }
 
     console.log(modalItem);
@@ -37,17 +37,18 @@ function AdditionalInformationWin(modalItem) {
     requst_btn.id = "requst_btn";
     requst_btn.className = "disable-btn";
     requst_btn.disabled = true;
-    requst_btn.addEventListener("click", () =>  {
+    requst_btn.addEventListener("click", () => {
         modal_create();
     })
 
     let apply_btn = document.createElement("button");
+    apply_btn.textContent = "Подать заявку";
     apply_btn.className = "save-btn";
     apply_btn.addEventListener("click", () => {
         // todo api check in storage
         // if (req === true) {
-         document.getElementById('requst_btn').disabled = false;
-         requst_btn.className = "save-btn";
+        document.getElementById('requst_btn').disabled = false;
+        requst_btn.className = "save-btn";
         // }
     })
 
@@ -67,10 +68,11 @@ function AdditionalInformationWin(modalItem) {
         apply_btn.textContent = "Проверить наличие требуемой магии";
         requst_btn.textContent = "Подать заявку на магическое существо";
         req = "get_magic_animal"
+    } else if (modalItem['content']['role'] === 'magic') {
+        requst_btn.style.display = "none";
     }
 
     btn_div.appendChild(apply_btn);
-
     btn_div.appendChild(requst_btn);
 
     modalItem["modalBody"].appendChild(text);
@@ -78,7 +80,9 @@ function AdditionalInformationWin(modalItem) {
     modalItem["modalBody"].appendChild(requestData);
     modalItem["modalBody"].appendChild(requestStatus);
     modalItem["modalBody"].appendChild(requestAdditionalInform);
-    modalItem["modalBody"].appendChild(btn_div);
+    if (modalItem.content.status !== 'DONE') {
+        modalItem["modalBody"].appendChild(btn_div);
+    }
 
     modalItem["modalTeg"].style.display = "block";
 }

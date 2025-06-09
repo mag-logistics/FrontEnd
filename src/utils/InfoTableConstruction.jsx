@@ -1,6 +1,8 @@
 import ModalWindowManager from "../ModalWindowManager.jsx";
 
 function infoTableConstruction({title, applications, role}) {
+    let btn_name = role === 'magic' ? 'Обработать' : 'Информация'
+
     return (
         <div>
             <div>
@@ -20,13 +22,17 @@ function infoTableConstruction({title, applications, role}) {
                     <div>{app.deadline}</div>
                     <div>{app.status}</div>
                     <div>{app.title}</div>
-                    <div><button onClick={() => ModalWindowManager(title, {
-                        number: app.id,
-                        date: app.deadline,
-                        status: app.status,
-                        details: app.title,
-                        role: role,
-                    })} className="btn">Обработать</button></div>
+                    <div>
+                        <button onClick={() => ModalWindowManager(title, {
+                            number: app.id,
+                            date: app.deadline,
+                            status: app.status,
+                            details: app.title,
+                            role: role,
+                        })} className="btn">
+                            { btn_name }
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

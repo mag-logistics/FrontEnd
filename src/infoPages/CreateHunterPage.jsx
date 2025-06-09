@@ -1,28 +1,35 @@
 import api from "../utils/api.js"
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 
 function CreateHunterPage() {
     let [app, setApp] = useState([]);
+    let containerRef = useRef(null);
+
+    const fetchHunterData = async () => {
+        const response = await api.get('/hunter/orders');
+        if (response.status === 200) {
+            const result = await response.data;
+            setApp(result);
+        } else {
+            const result = await response.data;
+            console.error("Ошибка сети: " + result);
+        }
+    };
 
     useEffect(() => {
-        const fetchHunterData = async () => {
-            const response = await fetch(`http://localhost:8080/api/hunter/orders`);
-            if (response.ok) {
-                const result = await response.json();
-                setApp(result);
-            } else {
-                const result = await response.json();
-                console.error("Ошибка сети: " + result);
-            }
-        };
+        let container = containerRef.current;
+        container.addEventListener("UpdatePage", () => {
+            console.log('Hunter UpdatePage');
+            fetchHunterData();
+        })
         fetchHunterData();
     }, [])
 
 
     return (
-        <div className="container">
+        <div className="container" id='container' ref={containerRef}>
             <InfoPageHeader req_name={null}
                             btn_name={null}
                             hunter_btn={'set_animal_storage_info'}/>

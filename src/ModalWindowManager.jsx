@@ -20,7 +20,9 @@ function ModalWindowManager(title, content) {
         while (windowItemDict['modalBody'].firstChild)
             windowItemDict['modalBody'].removeChild(windowItemDict['modalBody'].firstChild);
         windowItemDict['modalTeg'].style.display = "none";
-    //     todo request to update date
+        let container_div = document.getElementById("container");
+        console.log('raise UpdatePage')
+        container_div.dispatchEvent(new CustomEvent('UpdatePage'));
     }
 
     window.addEventListener("click", (event) => {
