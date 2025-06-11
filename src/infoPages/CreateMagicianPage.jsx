@@ -33,7 +33,7 @@ function CreateMagicianPage() {
         <div className="conteiner" id='container' ref={containerRef}>
             <InfoPageHeader  req_name={'get_magic_req'} btn_name={'Создать заявку на магию'} hunter_btn={'add_new_user'}/>
             <h1>Заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={applications} role={'magic'} />
+            <InfoTableConstruction title={'get_additional_info'} applications={applications} role={'magician'} />
         </div>
     )
 }

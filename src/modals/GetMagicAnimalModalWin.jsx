@@ -41,7 +41,7 @@ function GetMagicAnimalModalWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        api.post("/storer/order/create", {
+        api.post(`/storer/order/create?orderId=${modalItem.content.number}`, {
             name: magicAnimalName.value,
             title: "Описание туши",
             deadline: magicEndDate.value,

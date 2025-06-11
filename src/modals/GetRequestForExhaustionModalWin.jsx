@@ -43,7 +43,7 @@ function getRequestForExhaustionModalWin(modalItem) {
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
-        api.post("/hunter/order/create", {
+        api.post(`/hunter/order/create?orderId=${modalItem.content.number}`, {
             magicId: magicIndex.value,
             title: "Описание",
             deadline: magicEndDate.value,

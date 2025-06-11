@@ -80,7 +80,7 @@ function AdditionalInformationWin(modalItem) {
     modalItem["modalBody"].appendChild(requestData);
     modalItem["modalBody"].appendChild(requestStatus);
     modalItem["modalBody"].appendChild(requestAdditionalInform);
-    if (modalItem.content.status !== 'DONE') {
+    if (modalItem.content.status !== 'DONE' && modalItem['content']['role'] !== 'magician') {
         modalItem["modalBody"].appendChild(btn_div);
     }
 
