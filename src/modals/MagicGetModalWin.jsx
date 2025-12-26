@@ -1,6 +1,18 @@
-import '../utils/api.js'
-import api from '../utils/api.js'
+import '../api/api-client.js'
+import apiClient from '../api/api-client.js'
+import apiService from "../api/api-services.js";
 
+function showError(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        toast.classList.add("hidden");
+    }, 3000);
+}
 
 function openMagicGetModalWin(modalItem) {
     let magicIndexList = [
@@ -41,35 +53,44 @@ function openMagicGetModalWin(modalItem) {
         magicIndexSelected = event.target.value;
     })
 
-    let magicAdditionDescription = document.createElement("input");
-    magicAdditionDescription.placeholder = "Подробные характеристики";
-    magicAdditionDescription.type = "text";
-
     let apply_btn = document.createElement("button");
+    apply_btn.className = "info_button";
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        api.post("/mage/order/create", {
+        apiService.magician.createApp('', {
             quantity: magicVolume.value,
             deadline: magicEndDate.value,
-            magicId: magicIndexSelected.toString(),
-            title: magicAdditionDescription.value
+            magicId: magicIndexSelected.toString()
         }).then(res => {
             console.log(res.data);
-            let event = new CustomEvent("close_event");
-            modalItem["modalTeg"].dispatchEvent(event);
-        })
+            // let event = new CustomEvent("close_event");
+            // modalItem["modalTeg"].dispatchEvent(event);
+        }).catch(err => console.log(err));
         console.log(magicIndexSelected)
         let event = new CustomEvent("close_event");
         modalItem["modalTeg"].dispatchEvent(event);
+    })
+
+    let saveAsPattern = document.createElement("button");
+    saveAsPattern.className = "info_button";
+    saveAsPattern.textContent = 'Сохранить как шаблон'
+    saveAsPattern.addEventListener("click", () =>  {
+        if (magicIndexSelected !== null &&
+        magicVolume.value !== "" && magicEndDate.value !== "") {
+            apiService.magician.createAppPattern(magicIndexSelected)
+        } else {
+            showError('Пустые поля')
+        }
+
     })
 
     modalItem["modalBody"].appendChild(text);
     modalItem["modalBody"].appendChild(magicVolume);
     modalItem["modalBody"].appendChild(magicEndDate);
     modalItem["modalBody"].appendChild(magicIndex);
-    modalItem["modalBody"].appendChild(magicAdditionDescription);
     modalItem["modalBody"].appendChild(apply_btn);
+    modalItem["modalBody"].appendChild(saveAsPattern);
 
     modalItem["modalTeg"].style.display = "block";
 }

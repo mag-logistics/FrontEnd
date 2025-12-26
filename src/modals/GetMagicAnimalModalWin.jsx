@@ -1,11 +1,11 @@
-import api from "../utils/api.js";
+import apiClient from "../api/api-client.js";
 
 function GetMagicAnimalModalWin(modalItem) {
     let magicAnimalNames = [
         'Саня',
         'Ваня',
         'Владос'
-    ]  // todo api.get('') animal names
+    ]  // todo apiClient.get('') animal names
 
     modalItem['modalTitle'].textContent = "Подача заявки на магическое существо";
 
@@ -41,7 +41,7 @@ function GetMagicAnimalModalWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        api.post(`/storer/order/create?orderId=${modalItem.content.number}`, {
+        apiClient.post(`/storer/order/create?orderId=${modalItem.content.number}`, {
             name: magicAnimalName.value,
             title: "Описание туши",
             deadline: magicEndDate.value,

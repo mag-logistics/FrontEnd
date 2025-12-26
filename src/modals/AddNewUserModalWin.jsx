@@ -1,4 +1,4 @@
-import api from "../utils/api.js";
+import apiClient from "../api/api-client.js";
 
 function AdditionalInformationWin(modalItem) {
     let userRoleList = [
@@ -50,12 +50,13 @@ function AdditionalInformationWin(modalItem) {
 
     let userAddBtn = document.createElement("button");
     userAddBtn.textContent = "Сохранить данные";
+    userAddBtn.className = 'info_button';
     userAddBtn.addEventListener("click", () =>  {
         if (newUserRoleSelected === null) {
             console.log("Не заполнены поля!");
         }
         else {
-            api.post("mage/user/create", {
+            apiClient.post("mage/user/create", {
                 email: newUserEmail.value,
                 password: newUserPassword.value,
                 surname: newUserSurname.value,

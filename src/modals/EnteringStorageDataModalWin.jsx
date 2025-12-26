@@ -1,9 +1,9 @@
-import '../utils/api.js'
-import api from '../utils/api.js'
+import '../api/api-client.js'
+import apiClient from '../api/api-client.js'
 
 
 function enteringStorageDataModalWin(modalItem) {
-    let magicCreaturesList = [ // todo api request from back
+    let magicCreaturesList = [ // todo apiClient request from back
         "Кристальные пауки",
         "Лесных духов",
         "Болотные кикиморы",
@@ -49,7 +49,7 @@ function enteringStorageDataModalWin(modalItem) {
             console.log("Не заполнены поля!");
         }
         else {
-            api.post("hunter/order/create", { // todo so-so xd
+            apiClient.post("hunter/order/create", { // todo so-so xd
                 magicCreaturesName: magicCreaturesNameSelected,
                 magicCreaturesCount: magicCreaturesCount.value,
                 magicCreaturesStorage: magicCreaturesStorage.value

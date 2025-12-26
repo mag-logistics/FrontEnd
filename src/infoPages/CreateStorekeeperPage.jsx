@@ -1,21 +1,20 @@
-import api from "../utils/api.js"
 import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
+import apiService from "../api/api-services.js";
 
 function CreateStorekeeperPage() {
     let [app, setApp] = useState([]);
     let containerRef = useRef(null);
 
     const fetchExhaustionData = async () => {
-        const response = await api.get('/storer/orders');
-        if (response.status === 200) {
-            const result = await response.data;
-            setApp(result);
-        } else {
-            const result = await response.data;
-            console.error("Ошибка сети: " + result);
-        }
+        await apiService.storekeeper.getAllMagicAppByStorekeeper(1)
+            .then((data) => {
+                setApp(data.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     };
 
     useEffect(() => {
@@ -28,13 +27,10 @@ function CreateStorekeeperPage() {
     }, [])
 
     return (
-        <div className="container" id='container' ref={containerRef}>
-            <InfoPageHeader req_name={''}
-                            btn_name={'Подать заявку на магическое существо'}
-                            hunter_btn={null}
-            />
+        <div id='container' ref={containerRef}>
+            <InfoPageHeader main_page={false}/>
             <h1>Заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app} role={'storekeeper'}/>
+            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
         </div>
     )
 }

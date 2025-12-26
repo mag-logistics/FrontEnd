@@ -1,4 +1,4 @@
-import api from "../utils/api.js";
+import apiClient from "../api/api-client.js";
 import ModalWindowManager from "../ModalWindowManager.jsx";
 import {node} from "globals";
 
@@ -45,7 +45,7 @@ function AdditionalInformationWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.className = "save-btn";
     apply_btn.addEventListener("click", () => {
-        // todo api check in storage
+        // todo apiClient check in storage
         // if (req === true) {
         document.getElementById('requst_btn').disabled = false;
         requst_btn.className = "save-btn";

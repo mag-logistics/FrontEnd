@@ -1,5 +1,5 @@
 import app from "../App.jsx";
-import api from "../utils/api.js";
+import apiClient from "../api/api-client.js";
 
 function AddExhaustionResultModalWin(modalItem) {
     let magicIndexList = [
@@ -43,7 +43,7 @@ function AddExhaustionResultModalWin(modalItem) {
     console.log(modalItem)
     console.log(modalItem['content'])
     applyBtn.addEventListener("click", () =>  {
-        api.put(`/exhaustion/magic/add?orderId=${modalItem.content.number}`, {      // todo добавить сюда отправку конкретного id в параметры запроса
+        apiClient.put(`/exhaustion/magic/add?orderId=${modalItem.content.number}`, {      // todo добавить сюда отправку конкретного id в параметры запроса
             id: magicIndex.value,
             volume: magicVolume.value
         }).then(res => {

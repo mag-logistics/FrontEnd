@@ -1,13 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
 .form-container {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -45,13 +35,6 @@ body {
     box-sizing: border-box; /* Учитываем padding и border в ширине */
 }
 
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 24px;
-}
-
 .form-group {
     display: none;
     position: fixed;
@@ -70,7 +53,7 @@ label {
     color: #555;
 }
 
-input, select {
+.modal_text, input, select {
     width: 100%;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -121,4 +104,25 @@ input, select {
     color: white;
     border: none;
     margin: 5px;
+}
+
+#InfoPageHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* расстояние между кнопками и toggle */
+}
+
+#InfoPageHeader.solo {
+    justify-content: flex-end;
+}
+
+.filter-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-widget input {
+    margin: 0;
 }

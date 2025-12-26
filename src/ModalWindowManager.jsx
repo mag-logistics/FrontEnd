@@ -5,6 +5,7 @@ import AdditionalInformationWin from "./modals/AdditionalInformationWin.jsx";
 import AddNewUserModalWin from "./modals/AddNewUserModalWin.jsx";
 import GetMagicAnimalModalWin from "./modals/GetMagicAnimalModalWin.jsx";
 import AddExhaustionResultModalWin from "./modals/AddExhaustionResultModalWin.jsx";
+import WorkerPersonalInfoModalWin from "./modals/worker/WorkerPersonalInfoModalWin.jsx";
 
 function ModalWindowManager(title, content) {
     let windowItemDict = {
@@ -30,27 +31,33 @@ function ModalWindowManager(title, content) {
             closeModal();
         }
     })
-
-    if (title === 'get_magic_req') {
-        openMagicGetModalWin(windowItemDict);
-    }
-    else if (title === 'get_magic_animal'){
-        GetMagicAnimalModalWin(windowItemDict);
-    }
-    else if (title === 'set_animal_storage_info') {
-        enteringStorageDataModalWin(windowItemDict);
-    }
-    else if (title === 'get_request_for_exhaustion') {
-        getRequestForExhaustionModalWin(windowItemDict);
-    }
-    else if (title === 'get_additional_info') {
-        AdditionalInformationWin(windowItemDict)
-    }
-    else if (title === 'add_new_user'){
-        AddNewUserModalWin(windowItemDict)
-    }
-    else if (title === 'add_exhaustion_result') {
-        AddExhaustionResultModalWin(windowItemDict)
+    switch (title) {
+        case 'get_magic_req':
+            openMagicGetModalWin(windowItemDict);
+            break;
+        case 'get_magic_animal':
+            GetMagicAnimalModalWin(windowItemDict);
+            break;
+        case 'set_animal_storage_info':
+            enteringStorageDataModalWin(windowItemDict);
+            break;
+        case 'get_request_for_exhaustion':
+            getRequestForExhaustionModalWin(windowItemDict);
+            break;
+        case 'get_additional_info':
+            AdditionalInformationWin(windowItemDict);
+            break;
+        case 'add_new_user':
+            AddNewUserModalWin(windowItemDict);
+            break;
+        case 'add_exhaustion_result':
+            AddExhaustionResultModalWin(windowItemDict)
+            break;
+        case 'get_personal_info':
+            WorkerPersonalInfoModalWin(windowItemDict);
+            break;
+        default:
+            console.log(`This title ${title} don't work`);
     }
 
     windowItemDict['modalTeg'].addEventListener('close_event', () => {

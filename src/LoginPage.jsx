@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import api from "./utils/api.js";
 
 export function LoginOut(){
     localStorage.removeItem("role");
@@ -15,7 +14,7 @@ function LoginPage() {
         let username = e.target.username.value;
         let password = e.target.password.value;
 
-        //let user = api.get('/user', username, password);
+        //let user = apiClient.get('/user', username, password);
         let user = username;
         let role = null;
 

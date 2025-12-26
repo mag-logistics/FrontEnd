@@ -1,5 +1,5 @@
-import '../utils/api.js'
-import api from '../utils/api.js'
+import '../api/api-client.js'
+import apiClient from '../api/api-client.js'
 
 function getRequestForExhaustionModalWin(modalItem) {
     let magicIndexList = [
@@ -43,7 +43,7 @@ function getRequestForExhaustionModalWin(modalItem) {
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
-        api.post(`/hunter/order/create?orderId=${modalItem.content.number}`, {
+        apiClient.post(`/hunter/order/create?orderId=${modalItem.content.number}`, {
             magicId: magicIndex.value,
             title: "Описание",
             deadline: magicEndDate.value,

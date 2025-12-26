@@ -1,4 +1,4 @@
-import api from "../utils/api.js"
+import apiClient from "../api/api-client.js"
 import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
@@ -8,7 +8,7 @@ function CreateHunterPage() {
     let containerRef = useRef(null);
 
     const fetchHunterData = async () => {
-        const response = await api.get('/hunter/orders');
+        const response = await apiClient.get('/hunter/orders');
         if (response.status === 200) {
             const result = await response.data;
             setApp(result);
@@ -29,12 +29,10 @@ function CreateHunterPage() {
 
 
     return (
-        <div className="container" id='container' ref={containerRef}>
-            <InfoPageHeader req_name={null}
-                            btn_name={null}
-                            hunter_btn={'set_animal_storage_info'}/>
+        <div id='container' ref={containerRef}>
+            <InfoPageHeader />
             <h1>Заявки на магическое существо</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app} role={'hunter'}/>
+            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
         </div>
     )
 }
