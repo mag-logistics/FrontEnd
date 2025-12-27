@@ -1,5 +1,4 @@
 import '../api/api-client.js'
-import apiClient from '../api/api-client.js'
 import apiService from "../api/api-services.js";
 
 function showError(message) {
@@ -14,14 +13,37 @@ function showError(message) {
     }, 3000);
 }
 
-function openMagicGetModalWin(modalItem) {
-    let magicIndexList = [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-    ]
+function OpenMagicGetModalWin(modalItem) {
+    // let [magic, setMagic] = useState([]);
+    //
+    // const fetchData = async () => {
+    //     await apiService.general.getAllMagic()
+    //         .then((data) => {
+    //             setMagic(data.data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }
+    // useEffect(() => {
+    //     fetchData();
+    // }, [])
+
+    let magic = []
+    try {
+        magic = apiService.general.getAllMagic()
+        console.log("magic get")
+    } catch (e) {
+        console.log("magic get", e);
+    }
+
+    // let magicIndexList = [
+    //     "1",
+    //     "2",
+    //     "3",
+    //     "4",
+    //     "5"
+    // ]
 
     let magicIndexSelected = null;
     modalItem['modalTitle'].textContent = "Подача заявки на получение магии";
@@ -43,10 +65,10 @@ function openMagicGetModalWin(modalItem) {
     magicIndexPlaceholder.disabled = true;
     magicIndexPlaceholder.selected = true;
     magicIndex.appendChild(magicIndexPlaceholder);
-    for (let i = 0; i < magicIndexList.length; i++) {
+    for (let i = 0; i < magic.length; i++) {
         let option = document.createElement("option");
-        option.value = magicIndexList[i];
-        option.text = magicIndexList[i];
+        option.value = magic[i];
+        option.text = magic[i];
         magicIndex.appendChild(option);
     }
     magicIndex.addEventListener("change", (event) => {
@@ -95,4 +117,4 @@ function openMagicGetModalWin(modalItem) {
     modalItem["modalTeg"].style.display = "block";
 }
 
-export default openMagicGetModalWin;
+export default OpenMagicGetModalWin;

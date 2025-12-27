@@ -1,5 +1,9 @@
 const API_ENDPOINTS = {
     AUTH: {},
+    GENERAL: {
+        getAllAnimals: '/general/getAllAnimals',
+        getAllMagic: '/general/getAllMagic',
+    },
     MAGICIAN: {
         getAllOrders: (magicianId) => `/magician/getAllMagicApp?magicianId=${magicianId}`,
         createApp: (magicianId) => `/magician/createApp?magicianId=${magicianId}`,

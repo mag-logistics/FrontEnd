@@ -6,6 +6,7 @@ import AddNewUserModalWin from "./modals/AddNewUserModalWin.jsx";
 import GetMagicAnimalModalWin from "./modals/GetMagicAnimalModalWin.jsx";
 import AddExhaustionResultModalWin from "./modals/AddExhaustionResultModalWin.jsx";
 import WorkerPersonalInfoModalWin from "./modals/worker/WorkerPersonalInfoModalWin.jsx";
+import OpenMagicGetModalWin from "./modals/MagicGetModalWin.jsx";
 
 function ModalWindowManager(title, content) {
     let windowItemDict = {
@@ -33,7 +34,7 @@ function ModalWindowManager(title, content) {
     })
     switch (title) {
         case 'get_magic_req':
-            openMagicGetModalWin(windowItemDict);
+            OpenMagicGetModalWin(windowItemDict);
             break;
         case 'get_magic_animal':
             GetMagicAnimalModalWin(windowItemDict);

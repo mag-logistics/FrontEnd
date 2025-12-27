@@ -16,6 +16,18 @@ class ApiService {
             )
         }
     }
+    general = {
+        getAllAnimals: async () => {
+            return this.client.get(
+                this.endpoints.GENERAL.getAllAnimals
+            )
+        },
+        getAllMagic: async () => {
+            return this.client.get(
+                this.endpoints.GENERAL.getAllMagic
+            )
+        }
+    }
     magician = {
         getAllOrders: async (magicianId) => {
             // return this.client.get(
