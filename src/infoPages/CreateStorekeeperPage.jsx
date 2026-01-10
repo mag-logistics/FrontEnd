@@ -2,19 +2,24 @@ import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 import apiService from "../api/api-services.js";
+import applicationToRightDict from "../DTO/MagicianDTO/Application.js";
 
 function CreateStorekeeperPage() {
     let [app, setApp] = useState([]);
+    let [currentApp, setCurrentApp] = useState([]);
     let containerRef = useRef(null);
 
     const fetchExhaustionData = async () => {
-        await apiService.storekeeper.getAllMagicAppByStorekeeper(1)
+        apiService.storekeeper.getAllMagicApp()
             .then((data) => {
-                setApp(data.data);
+                setApp(applicationToRightDict(data.data));
             })
-            .catch((err) => {
-                console.error(err);
+            .catch((err) => console.log(err));
+        apiService.storekeeper.getAllMagicAppByStorekeeper(sessionStorage.getItem('user_id'))
+            .then((data) => {
+                setCurrentApp(applicationToRightDict(data.data));
             })
+            .catch((err) => console.log(err));
     };
 
     useEffect(() => {
@@ -29,8 +34,10 @@ function CreateStorekeeperPage() {
     return (
         <div id='container' ref={containerRef}>
             <InfoPageHeader main_page={false}/>
-            <h1>Заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
+            <h1>Мои заявки на магию</h1>
+            <InfoTableConstruction title={'get_additional_info'} applications={currentApp}/>
+            <h1>Все заявки на магию</h1>
+            <InfoTableConstruction title={''} applications={app}/>
         </div>
     )
 }

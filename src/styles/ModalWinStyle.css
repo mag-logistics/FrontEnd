@@ -12,8 +12,6 @@
     margin: auto; /* Центрируем окно */
     padding: 20px;
     border: 1px solid #1400FF;
-    /*width: 300px; !* Ширина окна *!*/
-    /*height: 200px;*/
     border-radius: 10px; /* Закруглённые углы */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень */
     box-sizing: border-box;
@@ -21,6 +19,11 @@
     top: 50%; /* Сдвигаем на 50% сверху */
     left: 50%; /* Сдвигаем на 50% слева */
     transform: translate(-50%, -50%); /* Центрируем */
+}
+
+#modalContext.night {
+    background-color: #1a1a3d;
+    color: white;
 }
 
 #modalBody textarea {
@@ -33,6 +36,10 @@
     border-radius: 4px; /* Закруглённые углы */
     font-size: 16px; /* Размер шрифта */
     box-sizing: border-box; /* Учитываем padding и border в ширине */
+    min-height: 50px; /* минимальная высота */
+    /*height: auto;*/
+    /*resize: none; !* отключаем ручное изменение *!*/
+    /*overflow: hidden; !* скрываем скролл *!*/
 }
 
 .form-group {
@@ -72,7 +79,9 @@ label {
     padding: 12px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin: 5px;
+    /*margin: 5px;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
     font-size: 16px;
     width: 100%;
     transition: background-color 0.3s;
@@ -103,16 +112,17 @@ label {
     width: 100%;
     color: white;
     border: none;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-#InfoPageHeader {
+.InfoPageHeader {
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 10px; /* расстояние между кнопками и toggle */
 }
 
-#InfoPageHeader.solo {
+.InfoPageHeader.solo {
     justify-content: flex-end;
 }
 

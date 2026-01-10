@@ -1,15 +1,9 @@
 import '../api/api-client.js'
 import apiClient from '../api/api-client.js'
+import apiService from "../api/api-services.js";
 
 function getRequestForExhaustionModalWin(modalItem) {
-    let magicIndexList = [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-    ]
-    let magicIndexSelected = null;
+    let appId = modalItem.content?.['number'];
 
     modalItem['modalTitle'].textContent = "Подача заявки на высасывание магии";
     let text = document.createElement("p");
@@ -23,37 +17,19 @@ function getRequestForExhaustionModalWin(modalItem) {
     magicEndDate.placeholder = "Срок";
     magicEndDate.type = "date";
 
-    let magicIndex = document.createElement("select");
-    let magicIndexPlaceholder = document.createElement("option");
-    magicIndexPlaceholder.value = "";
-    magicIndexPlaceholder.text = "Магический индекс";
-    magicIndexPlaceholder.disabled = true;
-    magicIndexPlaceholder.selected = true;
-    magicIndex.appendChild(magicIndexPlaceholder);
-    for (let i = 0; i < magicIndexList.length; i++) {
-        let option = document.createElement("option");
-        option.value = magicIndexList[i];
-        option.text = magicIndexList[i];
-        magicIndex.appendChild(option);
-    }
-    magicIndex.addEventListener("change", (event) => {
-        magicIndexSelected = event.target.value;
-    })
-
     let applyBtn = document.createElement("button");
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
-        apiClient.post(`/hunter/order/create?orderId=${modalItem.content.number}`, {
-            magicId: magicIndex.value,
-            title: "Описание",
-            deadline: magicEndDate.value,
-            quantity: magicVolume.value,
-        }).then(res => {
-            console.log(res.data);
-            let event = new CustomEvent('close_event')
-            modalItem["modalTeg"].dispatchEvent(event);
-        })
-
+        apiService.storekeeper.createExtractionApp(
+            localStorage.getItem('user_id'),
+            {
+                magicApp: {
+                    id: appId
+                },
+                volume: magicVolume.value,
+                deadline: magicEndDate.value,
+            }
+        ).catch(error => console.log(error));
         let event = new CustomEvent('close_event')
         modalItem["modalTeg"].dispatchEvent(event);
     })
@@ -61,7 +37,6 @@ function getRequestForExhaustionModalWin(modalItem) {
     modalItem["modalBody"].appendChild(text);
     modalItem["modalBody"].appendChild(magicVolume);
     modalItem["modalBody"].appendChild(magicEndDate);
-    modalItem["modalBody"].appendChild(magicIndex);
     modalItem["modalBody"].appendChild(applyBtn);
 
     modalItem["modalTeg"].style.display = "block";

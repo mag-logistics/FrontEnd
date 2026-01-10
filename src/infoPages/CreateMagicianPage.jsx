@@ -2,6 +2,7 @@ import apiService from "../api/api-services.js";
 import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
+import applicationToRightDict from "../DTO/MagicianDTO/Application.js";
 
 function CreateMagicianPage() {
     let [applications, setApplications] = useState([]);
@@ -9,12 +10,13 @@ function CreateMagicianPage() {
 
     useEffect(() => {
         const fetchMagicianData = async () => {
-            try {
-                const response = await apiService.magician.getAllOrders(1);
-                setApplications(response.data);
-            } catch (error) {
-                console.error(error);
-            }
+            apiService.magician.getAllOrders(sessionStorage.getItem('user_id'))
+                .then((data) => {
+                    setApplications(applicationToRightDict(data.data));
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         };
 
         let container = containerRef.current;

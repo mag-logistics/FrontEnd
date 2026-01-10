@@ -30,11 +30,9 @@ class ApiService {
     }
     magician = {
         getAllOrders: async (magicianId) => {
-            // return this.client.get(
-            //     this.endpoints.MAGICIAN.getAllOrders(magicianId)
-            // )
-            console.log("magicianId", magicianId);
-            return []
+            return this.client.get(
+                this.endpoints.MAGICIAN.getAllOrders(magicianId)
+            )
         },
         createApp: async (magicianId, magicianApp) => {
             return this.client.post(
@@ -58,6 +56,12 @@ class ApiService {
                 this.endpoints.MAGICIAN.getAllEmployees
             )
         },
+        createNewUser: async (magicianId) => {
+            return this.client.post(
+                this.endpoints.MAGICIAN.addNewUser(),
+                null
+            )
+        },
         getEmployee: async (employeeId) => {
             return this.client.get(
                 this.endpoints.MAGICIAN.getEmployee(employeeId)
@@ -77,6 +81,17 @@ class ApiService {
         }
     }
     storekeeper = {
+        getAllMagicApp: async () => {
+          return this.client.get(
+              this.endpoints.STOREKEEPER.getAllMagicApp
+          )
+        },
+        takeMagicApp: async (storekeeperId, magicAppId) => {
+            return this.client.post(
+                this.endpoints.STOREKEEPER.takeMagicApp(storekeeperId, magicAppId),
+                {}
+            )
+        },
         getAllMagicAppByStorekeeper: async (storekeeperId) => {
             return this.client.get(
                 this.endpoints.STOREKEEPER.getAllMagicAppByStorekeeper(storekeeperId)
@@ -92,15 +107,15 @@ class ApiService {
                 this.endpoints.STOREKEEPER.getMagicApplication(magicAppId)
             )
         },
-        processMagicApplication: async (storekeeperId, magicApplicationId) => {
+        processMagicApplication: async (storekeeperId, magicApplicationId, magicAppResponse) => {
             return this.client.post(
-                this.endpoints.STOREKEEPER.processMagicApplication(storekeeperId),
-                magicApplicationId
+                this.endpoints.STOREKEEPER.processMagicApplication(storekeeperId, magicApplicationId),
+                magicAppResponse
             )
         },
-        checkMagicAvailability: async (storekeeperId) => {
+        checkMagicAvailability: async (magicAppId) => {
             return this.client.get(
-                this.endpoints.STOREKEEPER.checkMagicAvailability(storekeeperId)
+                this.endpoints.STOREKEEPER.checkMagicAvailability(magicAppId)
             )
         },
         createExtractionApp: async (storekeeperId, extractionApplicationDTO) => {

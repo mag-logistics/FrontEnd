@@ -134,7 +134,7 @@ button:focus-visible {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #e53935;
+    /*background: #e53935;*/
     color: white;
     padding: 12px 20px;
     border-radius: 6px;
@@ -143,10 +143,22 @@ button:focus-visible {
     z-index: 9999;
 }
 
+.toast.error {
+    background: #e53935;
+}
+
+.toast.good {
+    background: #45a049;
+}
+
 .toast.show {
     opacity: 1;
 }
 
 .toast.hidden {
     display: none;
+}
+
+#body_container {
+    display: flex;
 }

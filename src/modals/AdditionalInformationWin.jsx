@@ -1,9 +1,33 @@
 import apiClient from "../api/api-client.js";
 import ModalWindowManager from "../ModalWindowManager.jsx";
 import {node} from "globals";
+import apiService from "../api/api-services.js";
+import showMessage from "../utils/MessageWindow.js";
+
+async function storekeeperCall(appId, reqBtn) {
+    let checkMagic = await apiService.storekeeper.checkMagicAvailability(appId);
+    if (checkMagic?.data === true) {
+        apiService.storekeeper.processMagicApplication(
+            localStorage.getItem('user_id'),
+            appId,
+            {
+                date: new Date().toISOString().split('T')[0],
+            }
+        ).then((result) => {
+            console.log('Результат обработки заявки: ' + result.data);
+        }).catch((err) => console.log(err));
+    } else {
+        showMessage('Требуемой магии нет, необходимо подать заявку на высасывание', false)
+        reqBtn.disabled = false;
+        reqBtn.className = "save-btn";
+    }
+
+}
 
 function AdditionalInformationWin(modalItem) {
     let req = null;
+    let user_role = sessionStorage.getItem('role');
+    let appId = modalItem['content']['number'];
     let modal_create = () => {
         // console.log('create')
         let event = new CustomEvent('close_event');
@@ -28,7 +52,9 @@ function AdditionalInformationWin(modalItem) {
     requestStatus.readOnly = true;
 
     let requestAdditionalInform = document.createElement("textarea");
-    requestAdditionalInform.textContent = "Подробные характеристики: " + modalItem['content']['details'];
+
+    requestAdditionalInform.textContent = "Подробные характеристики: " + (modalItem['content']?.details ?? "Значение не указано");
+    requestAdditionalInform.style.height = 140 + "px";
     requestAdditionalInform.readOnly = true;
 
     let btn_div = document.createElement("div");
@@ -45,31 +71,43 @@ function AdditionalInformationWin(modalItem) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.className = "save-btn";
     apply_btn.addEventListener("click", () => {
-        // todo apiClient check in storage
-        // if (req === true) {
-        document.getElementById('requst_btn').disabled = false;
-        requst_btn.className = "save-btn";
-        // }
+        let callFunc = null;
+        switch (user_role) {
+            case 'storekeeper':
+                callFunc = apiService.storekeeper.checkMagicAvailability(modalItem['content']['number']);
+                break;
+        }
+        callFunc?.then((result) => {
+            if (result.data === true){
+
+            } else {
+
+            }
+        }).catch((err) => {console.log(err)});
     })
 
-    console.log(modalItem['content']['number']);
-
-    if (modalItem['content']['role'] === 'hunter') {
-        apply_btn.textContent = "Проверить наличие магического существа на складе";
-        requst_btn.textContent = "Подача заявки на высасывание магии";
-        req = 'get_request_for_exhaustion';
-    } else if (modalItem['content']['role'] === 'exhaustion') {    // todo (Добавить условие, чтобы кнопки внести данные о высосанной магии не отображались, когда статус заявки уже DONE)
-        apply_btn.style.display = "none";
-        requst_btn.className = "save-btn";
-        requst_btn.disabled = false;
-        requst_btn.textContent = "Внести данные о высосанной магии";
-        req = "add_exhaustion_result";
-    } else if (modalItem['content']['role'] === 'storekeeper') {
-        apply_btn.textContent = "Проверить наличие требуемой магии";
-        requst_btn.textContent = "Подать заявку на магическое существо";
-        req = "get_magic_animal"
-    } else if (modalItem['content']['role'] === 'magic') {
-        requst_btn.style.display = "none";
+    switch (user_role) {
+        case 'hunter':
+            apply_btn.textContent = "Проверить наличие магического существа на складе";
+            requst_btn.textContent = "Подача заявки на высасывание магии";
+            req = 'get_magic_animal';
+            break;
+        case 'exhaustion':
+            apply_btn.style.display = "none";
+            requst_btn.className = "save-btn";
+            requst_btn.disabled = false;
+            requst_btn.textContent = "Внести данные о высосанной магии";
+            req = "add_exhaustion_result";
+            break;
+        case 'storekeeper':
+            apply_btn.textContent = "Проверить наличие требуемой магии";
+            apply_btn.addEventListener("click", async  () => storekeeperCall(appId, requst_btn));
+            requst_btn.textContent = "Подать заявку на высасывание";
+            req = "get_request_for_exhaustion"
+            break;
+        case 'magic':
+            requst_btn.style.display = "none";
+            break;
     }
 
     btn_div.appendChild(apply_btn);

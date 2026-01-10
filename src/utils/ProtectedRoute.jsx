@@ -1,7 +1,7 @@
 import {Navigate} from "react-router-dom";
 
 function ProtectedRoute({ role, children }) {
-    const userRole = localStorage.getItem("role");
+    const userRole = sessionStorage.getItem("role");
 
     if (userRole !== role) {
         return <Navigate to="/" replace />;

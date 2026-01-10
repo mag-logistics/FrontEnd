@@ -5,11 +5,11 @@ import EmployeePage from "../infoPages/EmployeePage.jsx";
 import {useNavigate} from "react-router-dom";
 
 function InfoPageHeader({main_page = true}) {
-    let user_role = localStorage.getItem('role');
+    let user_role = sessionStorage.getItem('role');
     const navigate = useNavigate();
 
     return (
-        <div id="InfoPageHeader" className={main_page ? '' : 'solo'}>
+        <div className={`InfoPageHeader ${main_page ? '' : 'solo'}`}>
             {/*todo переписать блок ниже для каждой user_role*/}
             {/*{*/}
             {/*    req_name !== null && (*/}
@@ -23,7 +23,7 @@ function InfoPageHeader({main_page = true}) {
             {/*}*/}
             {
                 user_role === 'magician' && main_page && (
-                    <div>
+                    <>
                         <button
                             onClick={() => ModalWindowManager('get_magic_req', null)}
                             className="info_button"
@@ -38,7 +38,7 @@ function InfoPageHeader({main_page = true}) {
                                 className="info_button">
                             Список сотрудников
                         </button>
-                    </div>
+                    </>
                 )
             }
             {/*{*/}

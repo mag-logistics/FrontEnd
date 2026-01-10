@@ -36,7 +36,7 @@ function CreateExhaustionPage() {
                             hunter_btn={null}
             />
             <h1>Заявки на высасывание магии</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app} role={'exhaustion'}/>
+            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
         </div>
     )
 }

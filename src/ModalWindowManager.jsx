@@ -23,7 +23,7 @@ function ModalWindowManager(title, content) {
             windowItemDict['modalBody'].removeChild(windowItemDict['modalBody'].firstChild);
         windowItemDict['modalTeg'].style.display = "none";
         let container_div = document.getElementById("container");
-        console.log('raise UpdatePage')
+        console.log('call UpdatePage')
         container_div.dispatchEvent(new CustomEvent('UpdatePage'));
     }
 

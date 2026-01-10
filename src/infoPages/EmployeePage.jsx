@@ -43,7 +43,7 @@ function EmployeePage() {
 
     return (
         <div id='container' ref={containerRef}>
-            <InfoPageHeader create_add_btn={false}/>
+            <InfoPageHeader main_page={false}/>
             <h1>Сотрудники организации</h1>
             <WorkerFilter onSearch={handleSearch}/>
             <InfoTableConstruction title={'get_personal_info'} applications={search.length ? search : app} worker={true}/>
