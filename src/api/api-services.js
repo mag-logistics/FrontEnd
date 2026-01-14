@@ -9,10 +9,13 @@ class ApiService {
     }
 
     auth = {
-        login: async (credentials) => {
+        login: async (email, password) => {
             return this.client.post(
-                this.endpoints.AUTH,
-                credentials
+                this.endpoints.AUTH.login,
+                {
+                    email: email,
+                    password: password
+                }
             )
         }
     }
@@ -26,7 +29,31 @@ class ApiService {
             return this.client.get(
                 this.endpoints.GENERAL.getAllMagic
             )
-        }
+        },
+        generateFirstReport: async (userId, applicationId, applicationType) => {
+            return this.client.post(
+                this.endpoints.GENERAL.generateFirstReport(userId, applicationId, applicationType),
+                {},
+                {
+                    responseType: 'blob',
+                    headers: {
+                        'Content-Type': 'application/pdf'
+                    }
+                }
+            )
+        },
+        generateSecondReport: async (userId, applicationId, applicationType) => {
+            return this.client.post(
+                this.endpoints.GENERAL.generateSecondReport(userId, applicationId, applicationType),
+                {},
+                {
+                    responseType: 'blob',
+                    headers: {
+                        'Content-Type': 'application/pdf'
+                    }
+                }
+            )
+        },
     }
     magician = {
         getAllOrders: async (magicianId) => {
@@ -126,18 +153,101 @@ class ApiService {
         }
     }
     extractor = {
-        createHunterApplication: async (extractorId, request) => {
+        createHunterApplication: async (request) => {
             return this.client.post(
-                this.endpoints.EXTRACTOR.createHunterApplicationRequest(extractorId),
+                this.endpoints.EXTRACTOR.createHunterApp,
                 request
             )
         },
-        getAllApplications: async (extractorId) => {
+        getAllApplications: async () => {
             return this.client.get(
-                this.endpoints.EXTRACTOR.getAllApplications(extractorId)
+                this.endpoints.EXTRACTOR.getAllExtractionApp,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        getAllAppByExtractor: async () => {
+            return this.client.get(
+                this.endpoints.EXTRACTOR.getAllExtractionAppByExtractor,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        takeExtractionApp: async (extractionAppId) => {
+            return this.client.post(
+                this.endpoints.EXTRACTOR.takeExtractionApp(extractionAppId),
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        checkMagicAnimalAvailability: async () => {
+            return false;
+            return this.client.get(
+                this.endpoints.EXTRACTOR.checkMagicAnimalAvailability()
+            )
+        },
+        processExtractionApplication: async () => {
+            return this.client.post(
+                this.endpoints.EXTRACTOR.processExtractionApplication(),
+                {}
             )
         }
     }
+    hunter= {
+        getAllApplications: async () => {
+            return this.client.get(
+                this.endpoints.HUNTER.getAllHunterApp,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        getAllAppByHunter: async () => {
+            return this.client.get(
+                this.endpoints.HUNTER.getAllHunterAppByHunter,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        takeHuntingApp: async (huntingAppId) => {
+            return this.client.post(
+                this.endpoints.HUNTER.takeHunterApp(huntingAppId),
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        },
+        processHuntingApplication: async (huntingAppId) => {
+            return this.client.post(
+                this.endpoints.HUNTER.processHunterApplication(),
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
+            )
+        }
+    }
+
 }
 
 const apiService = new ApiService();

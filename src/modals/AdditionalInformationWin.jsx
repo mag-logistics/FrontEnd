@@ -1,27 +1,43 @@
-import apiClient from "../api/api-client.js";
 import ModalWindowManager from "../ModalWindowManager.jsx";
-import {node} from "globals";
 import apiService from "../api/api-services.js";
 import showMessage from "../utils/MessageWindow.js";
 
-async function storekeeperCall(appId, reqBtn) {
+async function storekeeperCall(appId, reqBtn, modalItem) {
     let checkMagic = await apiService.storekeeper.checkMagicAvailability(appId);
     if (checkMagic?.data === true) {
         apiService.storekeeper.processMagicApplication(
-            localStorage.getItem('user_id'),
+            sessionStorage.getItem('user_id'),
             appId,
             {
                 date: new Date().toISOString().split('T')[0],
             }
         ).then((result) => {
+            console.log(result);
             console.log('Результат обработки заявки: ' + result.data);
-        }).catch((err) => console.log(err));
+            modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
+        }).catch((err) => console.log('Err ' + err));
     } else {
         showMessage('Требуемой магии нет, необходимо подать заявку на высасывание', false)
         reqBtn.disabled = false;
         reqBtn.className = "save-btn";
     }
 
+}
+
+async function extractorCall(reqBtn, modalItem) {
+    let checkAnimal = await apiService.extractor.checkMagicAnimalAvailability();
+    if (checkAnimal?.data === true) {
+        apiService.extractor.processExtractionApplication()
+            .then((result) => {
+                console.log('Результат обработки заявки: ' + result.data);
+                modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
+            })
+            .catch((err) => console.log('Err ' + err));
+    } else {
+        showMessage('Требуемых животных нет, необходимо подать заявку на охоту', false)
+        reqBtn.disabled = false;
+        reqBtn.className = "save-btn";
+    }
 }
 
 function AdditionalInformationWin(modalItem) {
@@ -32,6 +48,7 @@ function AdditionalInformationWin(modalItem) {
         // console.log('create')
         let event = new CustomEvent('close_event');
         modalItem["modalTeg"].dispatchEvent(event);
+        console.log(req)
         ModalWindowManager(req, modalItem['content'])
     }
 
@@ -70,42 +87,30 @@ function AdditionalInformationWin(modalItem) {
     let apply_btn = document.createElement("button");
     apply_btn.textContent = "Подать заявку";
     apply_btn.className = "save-btn";
-    apply_btn.addEventListener("click", () => {
-        let callFunc = null;
-        switch (user_role) {
-            case 'storekeeper':
-                callFunc = apiService.storekeeper.checkMagicAvailability(modalItem['content']['number']);
-                break;
-        }
-        callFunc?.then((result) => {
-            if (result.data === true){
-
-            } else {
-
-            }
-        }).catch((err) => {console.log(err)});
-    })
 
     switch (user_role) {
-        case 'hunter':
-            apply_btn.textContent = "Проверить наличие магического существа на складе";
-            requst_btn.textContent = "Подача заявки на высасывание магии";
-            req = 'get_magic_animal';
-            break;
-        case 'exhaustion':
+        case 'HUNTER':
             apply_btn.style.display = "none";
+            requst_btn.textContent = "Внести информацию о магичесом животном";
             requst_btn.className = "save-btn";
             requst_btn.disabled = false;
-            requst_btn.textContent = "Внести данные о высосанной магии";
-            req = "add_exhaustion_result";
+            req = 'get_magic_animal';
             break;
-        case 'storekeeper':
+        case 'EXTRACTOR':
+            apply_btn.textContent = "Проверить наличие магического существа на складе";
+            apply_btn.addEventListener("click",
+                async() => extractorCall(requst_btn, modalItem))
+            requst_btn.textContent = "Подать заявку на магическое существо";
+            req = "request_hunting";
+            break;
+        case 'STOREKEEPER':
             apply_btn.textContent = "Проверить наличие требуемой магии";
-            apply_btn.addEventListener("click", async  () => storekeeperCall(appId, requst_btn));
+            apply_btn.addEventListener("click",
+                async  () => storekeeperCall(appId, requst_btn, modalItem));
             requst_btn.textContent = "Подать заявку на высасывание";
             req = "get_request_for_exhaustion"
             break;
-        case 'magic':
+        case 'MAGICIAN':
             requst_btn.style.display = "none";
             break;
     }

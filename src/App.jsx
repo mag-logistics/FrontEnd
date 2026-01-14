@@ -30,15 +30,15 @@ function App() {
                     <Route
                         path="/magician"
                         element={
-                            <ProtectedRoute role="magician">
+                            <ProtectedRoute role="MAGICIAN">
                                 <CreateMagicianPage/>
                             </ProtectedRoute>
                         }
                     />
                     <Route
-                        path="/exhaustion"
+                        path="/extractor"
                         element={
-                            <ProtectedRoute role="exhaustion">
+                            <ProtectedRoute role="EXTRACTOR">
                                 <CreateExhaustionPage/>
                             </ProtectedRoute>
                         }
@@ -46,7 +46,7 @@ function App() {
                     <Route
                         path='/worker_manager'
                         element={
-                            <ProtectedRoute role="magician">
+                            <ProtectedRoute role="MAGICIAN">
                                 <EmployeePage/>
                             </ProtectedRoute>
                         }
@@ -54,19 +54,19 @@ function App() {
                     <Route
                         path="/storekeeper"
                         element={
-                            <ProtectedRoute role="storekeeper">
+                            <ProtectedRoute role="STOREKEEPER">
                                 <CreateStorekeeperPage/>
                             </ProtectedRoute>
                         }
                     />
-                    {/*<Route*/}
-                    {/*    path="/hunter"*/}
-                    {/*    element={*/}
-                    {/*        <ProtectedRoute role="hunter">*/}
-                    {/*            <CreateHunterPage/>*/}
-                    {/*        </ProtectedRoute>*/}
-                    {/*    }*/}
-                    {/*/>*/}
+                    <Route
+                        path="/hunter"
+                        element={
+                            <ProtectedRoute role="HUNTER">
+                                <CreateHunterPage/>
+                            </ProtectedRoute>
+                        }
+                    />
                 </Routes>
             </div>
         </div>

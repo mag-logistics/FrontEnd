@@ -21,7 +21,7 @@ function getRequestForExhaustionModalWin(modalItem) {
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
         apiService.storekeeper.createExtractionApp(
-            localStorage.getItem('user_id'),
+            sessionStorage.getItem('user_id'),
             {
                 magicApp: {
                     id: appId
@@ -30,8 +30,7 @@ function getRequestForExhaustionModalWin(modalItem) {
                 deadline: magicEndDate.value,
             }
         ).catch(error => console.log(error));
-        let event = new CustomEvent('close_event')
-        modalItem["modalTeg"].dispatchEvent(event);
+        modalItem["modalTeg"].dispatchEvent(new CustomEvent('close_event'));
     })
 
     modalItem["modalBody"].appendChild(text);

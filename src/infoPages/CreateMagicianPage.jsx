@@ -30,8 +30,19 @@ function CreateMagicianPage() {
     return (
         <div id='container' ref={containerRef}>
             <InfoPageHeader />
-            <h1>Заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={applications} />
+            {
+                applications.length > 0 && (
+                    <>
+                        <h1>Заявки на магию</h1>
+                        <InfoTableConstruction title={'get_additional_info'} applications={applications} />
+                    </>
+                )
+            }
+            {
+                applications.length === 0 && (
+                    <h1>Заявок в системе нет</h1>
+                )
+            }
         </div>
     )
 }

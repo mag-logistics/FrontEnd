@@ -5,22 +5,21 @@ function takeApp(appId){
     let currentCall = null;
     let user_role = sessionStorage.getItem("role");
     let user_id = sessionStorage.getItem("user_id");
-    console.log(appId);
     switch (user_role){
-        case "storekeeper":
+        case "STOREKEEPER":
             currentCall = apiService.storekeeper.takeMagicApp(user_id, appId);
             break;
-        case "hunter":
-            console.log('Для охотника пока ничего нет!')
+        case "HUNTER":
+            currentCall = apiService.hunter.takeMagicApp(appId);
             break;
-        case "extractor":
-            console.log('Для высасывателя пока ничего нет!')
+        case "EXTRACTOR":
+            currentCall = apiService.extractor.takeExtractionApp(appId);
             break;
     }
     currentCall?.then((data) => {
         console.log('Role: ' + user_role + '\n' + data.data);
         document.getElementById("container").dispatchEvent(new CustomEvent('UpdatePage'));
-    }).catch((err) => console.log(err));
+    }).catch((err) => console.log('Err ' + err));
 }
 
 function infoTableConstruction({title, applications, worker = false}) {
@@ -62,7 +61,7 @@ function infoTableConstruction({title, applications, worker = false}) {
             </div>
         )
     } else {
-        let btn_name = user_role === 'magician' ? 'Информация' : 'Обработать'
+        let btn_name = user_role === 'MAGICIAN' ? 'Информация' : 'Обработать'
         if (applications.length > 0) {
             return (
                 <div className="table-container">
@@ -81,13 +80,13 @@ function infoTableConstruction({title, applications, worker = false}) {
                             <div>{app.details}</div>
                             <div>
                                 {
-                                    app.status === 'CREATED' && user_role !== 'magician' && (
+                                    app.status === 'CREATED' && user_role !== 'MAGICIAN' && (
                                         <button onClick={async () => takeApp(app.id)} className="btn">
                                             Принять заявку
                                         </button>)
                                 }
                                 {
-                                    (app.status === 'WORKED' || (user_role === 'magician' && app.status !== 'FINISHED')) && (
+                                    (app.status === 'WORKED' || (user_role === 'MAGICIAN' && app.status !== 'FINISHED')) && (
                                         <button onClick={() => ModalWindowManager(title, {
                                             number: app.id,
                                             date: app.deadline.split('T')[0],
@@ -102,9 +101,9 @@ function infoTableConstruction({title, applications, worker = false}) {
                                 }
                                 {
                                     app.status === 'FINISHED' && (
-                                        <button onClick={() => {
-                                            console.log('Данного метода еще нет!')
-                                        }} className="btn">
+                                        <button onClick={() => ModalWindowManager('download_report', {
+                                            number: app.id
+                                        })} className="btn">
                                             Сформировать отчет
                                         </button>
                                     )

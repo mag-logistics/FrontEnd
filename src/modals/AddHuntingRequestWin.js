@@ -2,11 +2,9 @@ import apiService from "../api/api-services.js";
 import animalToRightDict from "../DTO/Animal.js";
 import autoResizeTextarea from "../utils/ResizeFunc.js";
 
-function createAddAnimalWin(animals, modalItem){
-
-    modalItem['modalTitle'].textContent = "Результат охоты для заявки №" + modalItem['content']['number'];
-
+function CreateRequestWin(animals, modalItem){
     let animalIndexSelected = null;
+
     let animalInfo = document.createElement("textarea");
     animalInfo.readOnly = true;
     animalInfo.style.resize = "none"; // Запретить изменение размера
@@ -40,39 +38,61 @@ function createAddAnimalWin(animals, modalItem){
         animalInfo.dispatchEvent(new CustomEvent('selectAnimal'));
     })
 
-    let magicAnimaCount = document.createElement("input");
-    magicAnimaCount.type = "number";
-    magicAnimaCount.placeholder = "Количество туш";
-    magicAnimaCount.min = "0";
+    let animalCount = document.createElement("input");
+    animalCount.placeholder = "Количество зверей";
+    animalCount.type = "number";
+    animalCount.min = "0";
+
+    let animalEndDate = document.createElement("input");
+    animalEndDate.type = "date";
 
     let apply_btn = document.createElement("button");
+    apply_btn.className = "info_button";
     apply_btn.textContent = "Подать заявку";
-    apply_btn.addEventListener("click", () =>  {
+    apply_btn.addEventListener("click", () => {
         console.log("Заявка подана!");
-        apiService.hunter.processHuntingApplication()
-            .then(response => {
-                console.log(response.data);
-                modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
-            })
-            .catch(error => console.log(error));
+        apiService.extractor.createHunterApplication(
+            {
+                magicId: null,
+                volume: parseInt(animalCount.value),
+                deadline: animalEndDate.value
+
+            }
+        ).then((res) => {
+            console.log("Answ");
+            console.log(res.data);
+            modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
+        }).catch(err => console.log("Err" + err));
+    })
+
+    let back_btn = document.createElement("button");
+    back_btn.className = "info_button";
+    back_btn.textContent = "Отмена"
+    back_btn.addEventListener("click", () => {
+        modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
     })
 
     modalItem["modalBody"].appendChild(animalSelector);
     modalItem["modalBody"].appendChild(animalInfo);
-    modalItem["modalBody"].appendChild(magicAnimaCount);
+    modalItem["modalBody"].appendChild(animalCount);
+    modalItem["modalBody"].appendChild(animalEndDate);
+    modalItem["modalBody"].appendChild(back_btn);
     modalItem["modalBody"].appendChild(apply_btn);
 
     modalItem["modalTeg"].style.display = "block";
 }
 
 
-function GetMagicAnimalModalWin(modalItem) {
-    apiService.general.getAllAnimals()
-        .then(data => {
-            let animals = animalToRightDict(data.data);
-            createAddAnimalWin(animals, modalItem);
-        })
-        .catch(error => console.log(error))
+function AddHuntingRequestWin(modalItem) {
+     apiService.general.getAllAnimals()
+         .then(data => {
+             let animals = animalToRightDict(data.data);
+             CreateRequestWin(animals, modalItem);
+         })
+         .catch(error => console.log(error))
+
+    modalItem['modalTitle'] = 'Создание заявки на высасывание'
+
 }
 
-export default GetMagicAnimalModalWin;
+export default AddHuntingRequestWin;

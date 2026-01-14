@@ -7,6 +7,8 @@ import GetMagicAnimalModalWin from "./modals/GetMagicAnimalModalWin.jsx";
 import AddExhaustionResultModalWin from "./modals/AddExhaustionResultModalWin.jsx";
 import WorkerPersonalInfoModalWin from "./modals/worker/WorkerPersonalInfoModalWin.jsx";
 import OpenMagicGetModalWin from "./modals/MagicGetModalWin.jsx";
+import ReportModalWin from "./modals/ReportModalWin.jsx";
+import AddHuntingRequestWin from "./modals/AddHuntingRequestWin.js";
 
 function ModalWindowManager(title, content) {
     let windowItemDict = {
@@ -54,8 +56,14 @@ function ModalWindowManager(title, content) {
         case 'add_exhaustion_result':
             AddExhaustionResultModalWin(windowItemDict)
             break;
+        case 'request_hunting':
+            AddHuntingRequestWin(windowItemDict)
+            break
         case 'get_personal_info':
             WorkerPersonalInfoModalWin(windowItemDict);
+            break;
+        case 'download_report':
+            ReportModalWin(windowItemDict);
             break;
         default:
             console.log(`This title ${title} don't work`);

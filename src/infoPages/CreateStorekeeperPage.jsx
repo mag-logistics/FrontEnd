@@ -34,10 +34,27 @@ function CreateStorekeeperPage() {
     return (
         <div id='container' ref={containerRef}>
             <InfoPageHeader main_page={false}/>
-            <h1>Мои заявки на магию</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={currentApp}/>
-            <h1>Все заявки на магию</h1>
-            <InfoTableConstruction title={''} applications={app}/>
+            {
+                currentApp.length > 0 && (
+                <>
+                    <h1>Мои заявки на магию</h1>
+                    <InfoTableConstruction title={'get_additional_info'} applications={currentApp}/>
+                </>
+                )
+            }
+            {
+                app.length > 0 && (
+                    <>
+                        <h1>Все заявки на магию</h1>
+                        <InfoTableConstruction title={''} applications={app}/>
+                    </>
+                )
+            }
+            {
+                app.length === 0 && (
+                    <h1>Заявок в системе нет</h1>
+                )
+            }
         </div>
     )
 }

@@ -1,21 +1,25 @@
-import apiClient from "../api/api-client.js"
 import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
+import apiService from "../api/api-services.js";
+import applicationToRightDict from "../DTO/MagicianDTO/Application.js";
 
 function CreateHunterPage() {
     let [app, setApp] = useState([]);
+    let [currentApp, setCurrentApp] = useState([]);
     let containerRef = useRef(null);
 
     const fetchHunterData = async () => {
-        const response = await apiClient.get('/hunter/orders');
-        if (response.status === 200) {
-            const result = await response.data;
-            setApp(result);
-        } else {
-            const result = await response.data;
-            console.error("Ошибка сети: " + result);
-        }
+        apiService.hunter.getAllApplications()
+            .then((response) => {
+                setApp(applicationToRightDict(response.data));
+            }).catch((error) => console.error(error))
+
+        apiService.hunter.getAllAppByHunter()
+            .then((response) => {
+                setCurrentApp(applicationToRightDict(response.data));
+            }).catch((error) => console.error(error))
+
     };
 
     useEffect(() => {
@@ -30,9 +34,28 @@ function CreateHunterPage() {
 
     return (
         <div id='container' ref={containerRef}>
-            <InfoPageHeader />
-            <h1>Заявки на магическое существо</h1>
-            <InfoTableConstruction title={'get_additional_info'} applications={app}/>
+            <InfoPageHeader main_page={false}/>
+            {
+                currentApp.length > 0 && (
+                    <>
+                        <h1>Мои заявки на магических зверей</h1>
+                        <InfoTableConstruction title={'get_additional_info'} applications={currentApp}/>
+                    </>
+                )
+            }
+            {
+                app.length > 0 && (
+                    <>
+                        <h1>Все заявки на магических зверей</h1>
+                        <InfoTableConstruction title={''} applications={app}/>
+                    </>
+                )
+            }
+            {
+                app.length === 0 && (
+                    <h1>Заявок в системе нет</h1>
+                )
+            }
         </div>
     )
 }

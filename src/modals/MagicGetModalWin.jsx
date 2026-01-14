@@ -5,6 +5,7 @@ import showMessage from "../utils/MessageWindow.js";
 
 function CreateForm(modalItem, magic, patterns) {
     let magicIndexSelected = null;
+    let isEdge = navigator.userAgent.includes('Edg');
 
     let patternSelector = document.createElement("select");
     let patternSelectPlaceholder = document.createElement("option");
@@ -30,8 +31,13 @@ function CreateForm(modalItem, magic, patterns) {
     magicVolume.min = "0";
 
     let magicEndDate = document.createElement("input");
-    magicEndDate.placeholder = "Срок";
     magicEndDate.type = "date";
+    if (isEdge) {
+        magicEndDate.style.cssText = `background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="gray"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') no-repeat right 10px center/16px;
+        -webkit-appearance: none;
+        appearance: none;`;
+    }
+
 
     let magicIndex = document.createElement("select");
     let magicIndexPlaceholder = document.createElement("option");
@@ -57,14 +63,15 @@ function CreateForm(modalItem, magic, patterns) {
         magicVolume.value = pattern.volume;
         magicEndDate.value = pattern.deadline;
         magicIndex.selectedIndex = currentMagicIndex + 1;
+        magicIndex.dispatchEvent(new Event('change'));
     })
 
     let apply_btn = document.createElement("button");
     apply_btn.className = "info_button";
     apply_btn.textContent = "Подать заявку";
-    apply_btn.addEventListener("click", () =>  {
+    apply_btn.addEventListener("click", () => {
         console.log("Заявка подана!");
-        apiService.magician.createApp(localStorage.getItem('user_id'), {
+        apiService.magician.createApp(sessionStorage.getItem('user_id'), {
             volume: parseInt(magicVolume.value),
             deadline: magicEndDate.value,
             magic: {
@@ -82,10 +89,10 @@ function CreateForm(modalItem, magic, patterns) {
     let saveAsPattern = document.createElement("button");
     saveAsPattern.className = "info_button";
     saveAsPattern.textContent = 'Сохранить как шаблон'
-    saveAsPattern.addEventListener("click", () =>  {
+    saveAsPattern.addEventListener("click", () => {
         if (magicIndexSelected !== null &&
             magicVolume.value !== "" && magicEndDate.value !== "") {
-            apiService.magician.createAppPattern(localStorage.getItem('user_id'),{
+            apiService.magician.createAppPattern(sessionStorage.getItem('user_id'), {
                 volume: parseInt(magicVolume.value),
                 deadline: magicEndDate.value,
                 magic: {

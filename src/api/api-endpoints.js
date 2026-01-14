@@ -1,8 +1,12 @@
 const API_ENDPOINTS = {
-    AUTH: {},
+    AUTH: {
+        login: '/auth/login'
+    },
     GENERAL: {
-        getAllAnimals: '/general/getAllAnimals',
+        getAllAnimals: '/general/getAnimals',
         getAllMagic: '/general/getAllMagic',
+        generateFirstReport: (userId, applicationId, applicationType) => `/general/generateReportOne?userId=${userId}&applicationId=${applicationId}&applicationType=${applicationType}`,
+        generateSecondReport: (userId, applicationId, applicationType) => `/general/generateReportTwo?userId=${userId}&applicationId=${applicationId}&applicationType=${applicationType}`
     },
     MAGICIAN: {
         getAllOrders: (magicianId) => `/magician/getAllMagicApp?magicianId=${magicianId}`,
@@ -26,10 +30,19 @@ const API_ENDPOINTS = {
         createExtractionApp: (storekeeperId) => `/storekeeper/createExtractionApp?storekeeperId=${storekeeperId}`,
     },
     EXTRACTOR: {
-        getAllApplications: (extractorId) => `/extractor/getAllApplications?extractorId=${extractorId}`,
-        createHunterApplicationRequest: (extractorId) => `/extractor/createHunterApplication/${extractorId}`,
+        getAllExtractionApp: '/extractor/applications',
+        getAllExtractionAppByExtractor: '/extractor/my-applications',
+        createHunterApp: '/extractor/hunter-application/',
+        takeExtractionApp: (appId) => `/extractor/applications/${appId}/take`,
+        checkMagicAnimalAvailability: () => '',
+        processExtractionApplication: () => ''
     },
-    HUNTER: {},
+    HUNTER: {
+        getAllHunterApp: '/hunter/applications',
+        getAllHunterAppByHunter: '/hunter/my-applications',
+        takeHunterApp: (appId) => `/hunter/applications/${appId}/take`,
+        processHunterApplication: () => ''
+    },
 }
 
 export default API_ENDPOINTS;

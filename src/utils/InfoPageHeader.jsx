@@ -22,7 +22,7 @@ function InfoPageHeader({main_page = true}) {
             {/*    )*/}
             {/*}*/}
             {
-                user_role === 'magician' && main_page && (
+                user_role === 'MAGICIAN' && main_page && (
                     <>
                         <button
                             onClick={() => ModalWindowManager('get_magic_req', null)}
@@ -47,7 +47,7 @@ function InfoPageHeader({main_page = true}) {
             {/*    )*/}
             {/*}*/}
             {
-                user_role === 'magician' && !main_page && (
+                user_role === 'MAGICIAN' && !main_page && (
                     <button onClick={() => navigate(`/${user_role}`)}
                             className="info_button">
                         Назад
