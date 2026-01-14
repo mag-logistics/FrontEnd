@@ -17,6 +17,7 @@ function CreateStorekeeperPage() {
             .catch((err) => console.log(err));
         apiService.storekeeper.getAllMagicAppByStorekeeper(sessionStorage.getItem('user_id'))
             .then((data) => {
+                console.log(data.data);
                 setCurrentApp(applicationToRightDict(data.data));
             })
             .catch((err) => console.log(err));

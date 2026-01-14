@@ -12,7 +12,8 @@ function animalToRightDict(animals) {
                         "Тип: " + app?.magic?.magicType?.name + "\n" +
                         "Цвет: " + app?.magic?.magicColour?.name + "\n" +
                         "Состояние: " + app?.magic?.magicState?.name + "\n" +
-                        "Мощность: " + app?.magic?.magicPower?.name
+                        "Мощность: " + app?.magic?.magicPower?.name + "\n" +
+                        "Объем: " + app.magicVolume
                 }
             }
         );

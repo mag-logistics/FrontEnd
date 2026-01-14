@@ -29,9 +29,32 @@ function CreateForm(modalItem, magic, patterns) {
     magicVolume.placeholder = "Объем магии";
     magicVolume.type = "number";
     magicVolume.min = "0";
+    magicVolume.step = "1";
+    magicVolume.addEventListener("input", (event) => {
+        magicVolume.value = event.target.value.replace(/[^0-9]/g, '')
+    })
 
     let magicEndDate = document.createElement("input");
     magicEndDate.type = "date";
+    let today = new Date();
+    let maxDay = new Date(today);
+    maxDay.setFullYear(today.getFullYear() + 2);
+
+    magicEndDate.min = today.toISOString().split("T")[0]
+    magicEndDate.max = maxDay.toISOString().split("T")[0];
+
+    magicEndDate.addEventListener("change", () => {
+        if (!magicEndDate.value) return;
+
+        const value = new Date(magicEndDate.value);
+        const max = new Date(magicEndDate.max);
+
+        if (value > max) {
+            magicEndDate.value = magicEndDate.max;
+        }
+    });
+
+
     if (isEdge) {
         magicEndDate.style.cssText = `background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="gray"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') no-repeat right 10px center/16px;
         -webkit-appearance: none;
@@ -71,6 +94,10 @@ function CreateForm(modalItem, magic, patterns) {
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () => {
         console.log("Заявка подана!");
+        if (magicIndexSelected === null) {
+            showMessage('Пустое поле')
+            return;
+        }
         apiService.magician.createApp(sessionStorage.getItem('user_id'), {
             volume: parseInt(magicVolume.value),
             deadline: magicEndDate.value,

@@ -18,6 +18,7 @@ function getRequestForExhaustionModalWin(modalItem) {
     magicEndDate.type = "date";
 
     let applyBtn = document.createElement("button");
+    applyBtn.className = "info_button";
     applyBtn.textContent = "Подать заявку";
     applyBtn.addEventListener("click", () =>  {
         apiService.storekeeper.createExtractionApp(

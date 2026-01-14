@@ -6,6 +6,8 @@ function applicationToRightDict(application) {
                     id: app.id,
                     deadline: app.deadline,
                     status: app.status,
+                    magic: app?.magic,
+                    volume: app.volume,
                     details: "Объем: " + app.volume + "\n" +
                         "Магия:\n" +
                         "Тип: " + app?.magic?.magicType?.name + "\n" +

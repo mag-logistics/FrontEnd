@@ -51,9 +51,13 @@ function CreateRequestWin(animals, modalItem){
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () => {
         console.log("Заявка подана!");
+        let pet = animals.find(pet => pet.id === animalIndexSelected);
+        console.log(pet);
         apiService.extractor.createHunterApplication(
+            modalItem['content'].number,
             {
-                magicId: null,
+                magicId: pet.magic.id,
+                animalId: pet.id,
                 volume: parseInt(animalCount.value),
                 deadline: animalEndDate.value
 

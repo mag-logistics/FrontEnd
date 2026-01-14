@@ -32,10 +32,10 @@ const API_ENDPOINTS = {
     EXTRACTOR: {
         getAllExtractionApp: '/extractor/applications',
         getAllExtractionAppByExtractor: '/extractor/my-applications',
-        createHunterApp: '/extractor/hunter-application/',
+        createHunterApp: (appId) => `/extractor/hunter-application?extrAppId=${appId}`,
         takeExtractionApp: (appId) => `/extractor/applications/${appId}/take`,
         checkMagicAnimalAvailability: () => '',
-        processExtractionApplication: () => ''
+        processExtractionApplication: (appId) => `extractor/applications/${appId}/complete`
     },
     HUNTER: {
         getAllHunterApp: '/hunter/applications',

@@ -153,10 +153,15 @@ class ApiService {
         }
     }
     extractor = {
-        createHunterApplication: async (request) => {
+        createHunterApplication: async (appId, request) => {
             return this.client.post(
-                this.endpoints.EXTRACTOR.createHunterApp,
-                request
+                this.endpoints.EXTRACTOR.createHunterApp(appId),
+                request,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
             )
         },
         getAllApplications: async () => {
@@ -191,15 +196,25 @@ class ApiService {
             )
         },
         checkMagicAnimalAvailability: async () => {
-            return false;
+            return {data: true};
             return this.client.get(
-                this.endpoints.EXTRACTOR.checkMagicAnimalAvailability()
+                this.endpoints.EXTRACTOR.checkMagicAnimalAvailability(),
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
             )
         },
-        processExtractionApplication: async () => {
+        processExtractionApplication: async (extractionAppId) => {
             return this.client.post(
-                this.endpoints.EXTRACTOR.processExtractionApplication(),
-                {}
+                this.endpoints.EXTRACTOR.processExtractionApplication(extractionAppId),
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                    }
+                }
             )
         }
     }

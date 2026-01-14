@@ -10,7 +10,7 @@ function takeApp(appId){
             currentCall = apiService.storekeeper.takeMagicApp(user_id, appId);
             break;
         case "HUNTER":
-            currentCall = apiService.hunter.takeMagicApp(appId);
+            currentCall = apiService.hunter.takeHuntingApp(appId);
             break;
         case "EXTRACTOR":
             currentCall = apiService.extractor.takeExtractionApp(appId);

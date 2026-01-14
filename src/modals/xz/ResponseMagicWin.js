@@ -1,4 +1,5 @@
 function ResponseMagicWin(modalItem){
+    console.log(modalItem['content']);
     modalItem['modalTitle'].textContent = "Выдача магии";
 
     let responseText = document.createElement("input");

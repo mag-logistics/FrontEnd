@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 import apiService from "../api/api-services.js";
-import applicationToRightDict from "../DTO/MagicianDTO/Application.js";
+import hunterApplicationToRightDict from "../DTO/MagicianDTO/HunterApp.js";
 
 function CreateHunterPage() {
     let [app, setApp] = useState([]);
@@ -12,12 +12,12 @@ function CreateHunterPage() {
     const fetchHunterData = async () => {
         apiService.hunter.getAllApplications()
             .then((response) => {
-                setApp(applicationToRightDict(response.data));
+                setApp(hunterApplicationToRightDict(response.data));
             }).catch((error) => console.error(error))
 
         apiService.hunter.getAllAppByHunter()
             .then((response) => {
-                setCurrentApp(applicationToRightDict(response.data));
+                setCurrentApp(hunterApplicationToRightDict(response.data));
             }).catch((error) => console.error(error))
 
     };

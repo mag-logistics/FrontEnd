@@ -9,6 +9,7 @@ import WorkerPersonalInfoModalWin from "./modals/worker/WorkerPersonalInfoModalW
 import OpenMagicGetModalWin from "./modals/MagicGetModalWin.jsx";
 import ReportModalWin from "./modals/ReportModalWin.jsx";
 import AddHuntingRequestWin from "./modals/AddHuntingRequestWin.js";
+import ResponseMagicWin from "./modals/xz/ResponseMagicWin.js";
 
 function ModalWindowManager(title, content) {
     let windowItemDict = {
@@ -61,6 +62,9 @@ function ModalWindowManager(title, content) {
             break
         case 'get_personal_info':
             WorkerPersonalInfoModalWin(windowItemDict);
+            break;
+        case 'response_magic':
+            ResponseMagicWin(windowItemDict)
             break;
         case 'download_report':
             ReportModalWin(windowItemDict);

@@ -1,21 +1,41 @@
 import ModalWindowManager from "../ModalWindowManager.jsx";
 import apiService from "../api/api-services.js";
 import showMessage from "../utils/MessageWindow.js";
+import autoResizeTextarea from "../utils/ResizeFunc.js";
 
-async function storekeeperCall(appId, reqBtn, modalItem) {
+async function responseCall(user_role, modalItem) {
+    let callFunc = null;
+    let appId = modalItem['content']['number']
+    switch (user_role) {
+        case "HUNTER":
+            callFunc = null;
+            break;
+        case "EXTRACTOR":
+            callFunc = apiService.extractor.processExtractionApplication(appId);
+            break;
+        case "STOREKEEPER":
+            callFunc = apiService.storekeeper.processMagicApplication(
+                sessionStorage.getItem('user_id'),
+                appId,
+                {
+                    date: new Date().toISOString().split("T")[0],
+                }
+            )
+            break;
+    }
+    callFunc?.then((result) => {
+        console.log(result);
+        console.log('Результат обработки заявки: ' + result.data);
+        modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
+    }).catch((err) => console.log('Err ' + err));
+}
+
+
+async function storekeeperCall(appId, reqBtn, resp_btn) {
     let checkMagic = await apiService.storekeeper.checkMagicAvailability(appId);
     if (checkMagic?.data === true) {
-        apiService.storekeeper.processMagicApplication(
-            sessionStorage.getItem('user_id'),
-            appId,
-            {
-                date: new Date().toISOString().split('T')[0],
-            }
-        ).then((result) => {
-            console.log(result);
-            console.log('Результат обработки заявки: ' + result.data);
-            modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
-        }).catch((err) => console.log('Err ' + err));
+        resp_btn.disabled = false;
+        resp_btn.className = "save-btn";
     } else {
         showMessage('Требуемой магии нет, необходимо подать заявку на высасывание', false)
         reqBtn.disabled = false;
@@ -24,15 +44,12 @@ async function storekeeperCall(appId, reqBtn, modalItem) {
 
 }
 
-async function extractorCall(reqBtn, modalItem) {
+async function extractorCall(reqBtn, resp_btn) {
     let checkAnimal = await apiService.extractor.checkMagicAnimalAvailability();
     if (checkAnimal?.data === true) {
-        apiService.extractor.processExtractionApplication()
-            .then((result) => {
-                console.log('Результат обработки заявки: ' + result.data);
-                modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
-            })
-            .catch((err) => console.log('Err ' + err));
+        console.log(checkAnimal.data);
+        resp_btn.disabled = false;
+        resp_btn.className = "save-btn";
     } else {
         showMessage('Требуемых животных нет, необходимо подать заявку на охоту', false)
         reqBtn.disabled = false;
@@ -59,20 +76,31 @@ function AdditionalInformationWin(modalItem) {
     let requestNumber = document.createElement("textarea");
     requestNumber.textContent = "Номер: " + modalItem['content']['number'];
     requestNumber.readOnly = true;
+    requestNumber.style.resize = "none"; // Запретить изменение размера
+    requestNumber.style.whiteSpace = "pre-wrap"; // Сохранять переносы строк
+    requestNumber.style.overflow = "hidden";
 
     let requestData = document.createElement("textarea");
     requestData.textContent = "Дата: " + modalItem['content']['date'];
     requestData.readOnly = true;
+    requestData.style.resize = "none"; // Запретить изменение размера
+    requestData.style.whiteSpace = "pre-wrap"; // Сохранять переносы строк
+    requestData.style.overflow = "hidden";
 
     let requestStatus = document.createElement("textarea");
     requestStatus.textContent = "Статус: " + modalItem['content']['status'];
     requestStatus.readOnly = true;
+    requestStatus.style.resize = "none"; // Запретить изменение размера
+    requestStatus.style.whiteSpace = "pre-wrap"; // Сохранять переносы строк
+    requestStatus.style.overflow = "hidden";
 
     let requestAdditionalInform = document.createElement("textarea");
-
-    requestAdditionalInform.textContent = "Подробные характеристики: " + (modalItem['content']?.details ?? "Значение не указано");
-    requestAdditionalInform.style.height = 140 + "px";
     requestAdditionalInform.readOnly = true;
+    requestAdditionalInform.style.resize = "none"; // Запретить изменение размера
+    requestAdditionalInform.style.whiteSpace = "pre-wrap"; // Сохранять переносы строк
+    requestAdditionalInform.style.overflow = "hidden";
+    requestAdditionalInform.textContent = "Подробные характеристики: " + (modalItem['content']?.details ?? "Значение не указано");
+    setTimeout(() => autoResizeTextarea(requestAdditionalInform), 0);
 
     let btn_div = document.createElement("div");
 
@@ -84,6 +112,14 @@ function AdditionalInformationWin(modalItem) {
         modal_create();
     })
 
+    let resp_btn = document.createElement("button");
+    resp_btn.id = "resp_btn";
+    resp_btn.className = "disable-btn";
+    resp_btn.disabled = true;
+    resp_btn.addEventListener("click",
+        async () => responseCall(user_role, modalItem));
+
+
     let apply_btn = document.createElement("button");
     apply_btn.textContent = "Подать заявку";
     apply_btn.className = "save-btn";
@@ -91,6 +127,7 @@ function AdditionalInformationWin(modalItem) {
     switch (user_role) {
         case 'HUNTER':
             apply_btn.style.display = "none";
+            resp_btn.style.display = "none";
             requst_btn.textContent = "Внести информацию о магичесом животном";
             requst_btn.className = "save-btn";
             requst_btn.disabled = false;
@@ -99,23 +136,27 @@ function AdditionalInformationWin(modalItem) {
         case 'EXTRACTOR':
             apply_btn.textContent = "Проверить наличие магического существа на складе";
             apply_btn.addEventListener("click",
-                async() => extractorCall(requst_btn, modalItem))
+                async() => extractorCall(requst_btn, resp_btn))
             requst_btn.textContent = "Подать заявку на магическое существо";
+            resp_btn.textContent = "Добавить магию"
             req = "request_hunting";
             break;
         case 'STOREKEEPER':
             apply_btn.textContent = "Проверить наличие требуемой магии";
             apply_btn.addEventListener("click",
-                async  () => storekeeperCall(appId, requst_btn, modalItem));
+                async  () => storekeeperCall(appId, requst_btn, resp_btn));
             requst_btn.textContent = "Подать заявку на высасывание";
+            resp_btn.textContent = "Выдать магию"
             req = "get_request_for_exhaustion"
             break;
         case 'MAGICIAN':
             requst_btn.style.display = "none";
+            resp_btn.style.display = "none";
             break;
     }
 
     btn_div.appendChild(apply_btn);
+    btn_div.appendChild(resp_btn);
     btn_div.appendChild(requst_btn);
 
     modalItem["modalBody"].appendChild(text);
@@ -123,7 +164,7 @@ function AdditionalInformationWin(modalItem) {
     modalItem["modalBody"].appendChild(requestData);
     modalItem["modalBody"].appendChild(requestStatus);
     modalItem["modalBody"].appendChild(requestAdditionalInform);
-    if (modalItem.content.status !== 'DONE' && modalItem['content']['role'] !== 'magician') {
+    if (modalItem.content.status !== 'DONE' && modalItem['content']['role'] !== 'MAGICIAN') {
         modalItem["modalBody"].appendChild(btn_div);
     }
 

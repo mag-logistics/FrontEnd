@@ -10,17 +10,6 @@ function InfoPageHeader({main_page = true}) {
 
     return (
         <div className={`InfoPageHeader ${main_page ? '' : 'solo'}`}>
-            {/*todo переписать блок ниже для каждой user_role*/}
-            {/*{*/}
-            {/*    req_name !== null && (*/}
-            {/*        <button*/}
-            {/*            onClick={() => ModalWindowManager(req_name, null)}*/}
-            {/*            className="info_button"*/}
-            {/*        >*/}
-            {/*            { btn_name }*/}
-            {/*        </button>*/}
-            {/*    )*/}
-            {/*}*/}
             {
                 user_role === 'MAGICIAN' && main_page && (
                     <>
@@ -41,11 +30,6 @@ function InfoPageHeader({main_page = true}) {
                     </>
                 )
             }
-            {/*{*/}
-            {/*    user_role === 'storekeeper' && !main_page && (*/}
-            {/*        */}
-            {/*    )*/}
-            {/*}*/}
             {
                 user_role === 'MAGICIAN' && !main_page && (
                     <button onClick={() => navigate(`/${user_role}`)}
@@ -54,15 +38,6 @@ function InfoPageHeader({main_page = true}) {
                     </button>
                 )
             }
-
-            {/*{*/}
-            {/*    hunter_btn !== null && hunter_btn === 'set_animal_storage_info' && (*/}
-            {/*        <button onClick={() => ModalWindowManager(hunter_btn, null)}*/}
-            {/*                className="info_button">*/}
-            {/*            Добавить информацию по магическому существу*/}
-            {/*        </button>*/}
-            {/*    )*/}
-            {/*}*/}
             <button
                 onClick={() => LoginOut()}
                 className="info_button"
