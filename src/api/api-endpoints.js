@@ -41,7 +41,7 @@ const API_ENDPOINTS = {
         getAllHunterApp: '/hunter/applications',
         getAllHunterAppByHunter: '/hunter/my-applications',
         takeHunterApp: (appId) => `/hunter/applications/${appId}/take`,
-        processHunterApplication: () => ''
+        processHunterApplication: (appId) => `/hunter/application/${appId}/complete`
     },
 }
 

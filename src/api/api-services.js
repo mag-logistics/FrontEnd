@@ -251,7 +251,7 @@ class ApiService {
         },
         processHuntingApplication: async (huntingAppId) => {
             return this.client.post(
-                this.endpoints.HUNTER.processHunterApplication(),
+                this.endpoints.HUNTER.processHunterApplication(huntingAppId),
                 {},
                 {
                     headers: {

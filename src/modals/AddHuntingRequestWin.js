@@ -58,9 +58,8 @@ function CreateRequestWin(animals, modalItem){
             {
                 magicId: pet.magic.id,
                 animalId: pet.id,
-                volume: parseInt(animalCount.value),
+                quantity: parseInt(animalCount.value),
                 deadline: animalEndDate.value
-
             }
         ).then((res) => {
             console.log("Answ");

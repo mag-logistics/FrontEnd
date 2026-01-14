@@ -46,11 +46,11 @@ function createAddAnimalWin(animals, modalItem){
     magicAnimaCount.min = "0";
 
     let apply_btn = document.createElement("button");
-    apply_btn.textContent = "Подать заявку";
+    apply_btn.textContent = "Подтвердить";
     apply_btn.className = 'info_button'
     apply_btn.addEventListener("click", () =>  {
         console.log("Заявка подана!");
-        apiService.hunter.processHuntingApplication()
+        apiService.hunter.processHuntingApplication(modalItem['content']['number'])
             .then(response => {
                 console.log(response.data);
                 modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
