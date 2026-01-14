@@ -195,10 +195,9 @@ class ApiService {
                 }
             )
         },
-        checkMagicAnimalAvailability: async () => {
-            return {data: true};
+        checkMagicAnimalAvailability: async (extractionAppId) => {
             return this.client.get(
-                this.endpoints.EXTRACTOR.checkMagicAnimalAvailability(),
+                this.endpoints.EXTRACTOR.checkMagicAnimalAvailability(extractionAppId),
                 {
                     headers: {
                         'Authorization': `Bearer ${sessionStorage.getItem('token')}`

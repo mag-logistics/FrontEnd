@@ -44,8 +44,8 @@ async function storekeeperCall(appId, reqBtn, resp_btn) {
 
 }
 
-async function extractorCall(reqBtn, resp_btn) {
-    let checkAnimal = await apiService.extractor.checkMagicAnimalAvailability();
+async function extractorCall(appId, reqBtn, resp_btn) {
+    let checkAnimal = await apiService.extractor.checkMagicAnimalAvailability(appId);
     if (checkAnimal?.data === true) {
         console.log(checkAnimal.data);
         resp_btn.disabled = false;
@@ -136,7 +136,7 @@ function AdditionalInformationWin(modalItem) {
         case 'EXTRACTOR':
             apply_btn.textContent = "Проверить наличие магического существа на складе";
             apply_btn.addEventListener("click",
-                async() => extractorCall(requst_btn, resp_btn))
+                async() => extractorCall(appId, requst_btn, resp_btn))
             requst_btn.textContent = "Подать заявку на магическое существо";
             resp_btn.textContent = "Добавить магию"
             req = "request_hunting";

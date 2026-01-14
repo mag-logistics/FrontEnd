@@ -34,8 +34,8 @@ const API_ENDPOINTS = {
         getAllExtractionAppByExtractor: '/extractor/my-applications',
         createHunterApp: (appId) => `/extractor/hunter-application?extrAppId=${appId}`,
         takeExtractionApp: (appId) => `/extractor/applications/${appId}/take`,
-        checkMagicAnimalAvailability: () => '',
-        processExtractionApplication: (appId) => `extractor/applications/${appId}/complete`
+        checkMagicAnimalAvailability: (appId) => `/extractor/applications/${appId}/check`,
+        processExtractionApplication: (appId) => `/extractor/applications/${appId}/complete`
     },
     HUNTER: {
         getAllHunterApp: '/hunter/applications',
