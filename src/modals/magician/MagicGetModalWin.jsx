@@ -1,6 +1,6 @@
-import '../api/api-client.js'
-import apiService from "../api/api-services.js";
-import showMessage from "../utils/MessageWindow.js";
+import '../../api/api-client.js'
+import apiService from "../../api/api-services.js";
+import showMessage from "../../utils/MessageWindow.js";
 
 
 function CreateForm(modalItem, magic, patterns) {
@@ -56,7 +56,7 @@ function CreateForm(modalItem, magic, patterns) {
 
 
     if (isEdge) {
-        magicEndDate.style.cssText = `background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="gray"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') no-repeat right 10px center/16px;
+        magicEndDate.style.cssText = `background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke="gray"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') no-repeat right 10px center/16px;
         -webkit-appearance: none;
         appearance: none;`;
     }
@@ -93,7 +93,6 @@ function CreateForm(modalItem, magic, patterns) {
     apply_btn.className = "info_button";
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () => {
-        console.log("Заявка подана!");
         if (magicIndexSelected === null) {
             showMessage('Пустое поле')
             return;
@@ -104,13 +103,9 @@ function CreateForm(modalItem, magic, patterns) {
             magic: {
                 id: magicIndexSelected.toString()
             }
-        }).then(res => {
-            console.log("Answ");
-            console.log(res.data);
-            let event = new CustomEvent("close_event");
-            modalItem["modalTeg"].dispatchEvent(event);
+        }).then(() => {
+            modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
         }).catch(err => console.log("Err" + err));
-        console.log(magicIndexSelected)
     })
 
     let saveAsPattern = document.createElement("button");
@@ -125,9 +120,7 @@ function CreateForm(modalItem, magic, patterns) {
                 magic: {
                     id: magicIndexSelected.toString()
                 }
-            }).then(res => {
-                console.log("Answ");
-                console.log(res.data);
+            }).then(() => {
                 showMessage('Шаблон сохранен', false)
             }).catch(error => {
                 console.log(error)
@@ -182,25 +175,6 @@ function OpenMagicGetModalWin(modalItem) {
             CreateForm(modalItem, formattedMagic, formattedPatterns);
         })
         .catch(error => console.log(error));
-
-    // apiService.general.getAllMagic()
-    //     .then(data => {
-    //         console.log(data.data);
-    //         let magic = data.data;
-    //         let formattedMagic = magic.map(magicItem => {
-    //             return {
-    //                 id: magicItem.id,
-    //                 name: "Тип: " + magicItem?.magicType?.name + " " +
-    //                     "Цвет: " + magicItem?.magicColour?.name + " " +
-    //                     "Состояние: " + magicItem?.magicState?.name + " " +
-    //                     "Мощность: " + magicItem?.magicPower?.name
-    //             }
-    //         })
-    //         CreateForm(modalItem, formattedMagic);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    // })
 }
 
 export default OpenMagicGetModalWin;

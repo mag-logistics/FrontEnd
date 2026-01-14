@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 import './styles/App.css'
 import LoginPage from "./LoginPage.jsx";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
@@ -9,11 +9,7 @@ import CreateStorekeeperPage from "./infoPages/CreateStorekeeperPage.jsx";
 import Header from "./header/PageHeader.jsx";
 import EmployeePage from "./infoPages/EmployeePage.jsx";
 
-// import apiClient from "./utils/api-client.js";
-
 function App() {
-    // todo исправить кнопки в таблицах с info
-
     return (
         <div>
             <Header/>

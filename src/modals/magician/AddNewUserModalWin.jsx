@@ -1,5 +1,5 @@
-import apiClient from "../api/api-client.js";
-import apiService from "../api/api-services.js";
+import apiService from "../../api/api-services.js";
+import showMessage from "../../utils/MessageWindow.js";
 
 function AdditionalInformationWin(modalItem) {
     let userRoleList = [
@@ -82,10 +82,10 @@ function AdditionalInformationWin(modalItem) {
     userAddBtn.className = 'info_button';
     userAddBtn.addEventListener("click", () =>  {
         if (newUserRoleSelected === null) {
-            console.log("Не заполнены поля!");
+            showMessage("Не заполнены поля!");
         }
         else {
-            apiService.magician.createNewUser(localStorage.getItem('user_id'),{
+            apiService.magician.createNewUser(sessionStorage.getItem('user_id'),{
                 email: newUserEmail.value,
                 password: newUserPassword.value,
                 surname: newUserSurname.value,

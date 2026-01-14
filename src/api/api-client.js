@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {LoginOut} from "../LoginPage.jsx";
 
 class ApiClient {
     constructor(){
@@ -17,17 +18,17 @@ class ApiClient {
     }
 
     handleError(error){
-        // console.error('API Error:', error);
-        // Обработка различных статусов
         if (error.response) {
             switch (error.response.status) {
                 case 401:
                     // Перенаправление на логин
-                    window.location.href = '/login';
+                    LoginOut();
                     break;
                 case 403:
-                    // Доступ запрещен
-                    throw new Error('Доступ запрещен');
+                    console.log('Доступ запрещен 403')
+                    LoginOut();
+                    break;
+                    // throw new Error('Доступ запрещен');
                 case 404:
                     throw new Error('Ресурс не найден');
                 case 500:

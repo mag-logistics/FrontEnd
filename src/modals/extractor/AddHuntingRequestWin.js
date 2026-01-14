@@ -1,6 +1,6 @@
-import apiService from "../api/api-services.js";
-import animalToRightDict from "../DTO/Animal.js";
-import autoResizeTextarea from "../utils/ResizeFunc.js";
+import apiService from "../../api/api-services.js";
+import animalToRightDict from "../../DTO/Animal.js";
+import autoResizeTextarea from "../../utils/ResizeFunc.js";
 
 function CreateRequestWin(animals, modalItem){
     let animalIndexSelected = null;
@@ -50,9 +50,7 @@ function CreateRequestWin(animals, modalItem){
     apply_btn.className = "info_button";
     apply_btn.textContent = "Подать заявку";
     apply_btn.addEventListener("click", () => {
-        console.log("Заявка подана!");
         let pet = animals.find(pet => pet.id === animalIndexSelected);
-        console.log(pet);
         apiService.extractor.createHunterApplication(
             modalItem['content'].number,
             {
@@ -61,9 +59,7 @@ function CreateRequestWin(animals, modalItem){
                 quantity: parseInt(animalCount.value),
                 deadline: animalEndDate.value
             }
-        ).then((res) => {
-            console.log("Answ");
-            console.log(res.data);
+        ).then(() => {
             modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
         }).catch(err => console.log("Err" + err));
     })

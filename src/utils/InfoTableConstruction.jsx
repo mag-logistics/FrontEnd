@@ -16,8 +16,7 @@ function takeApp(appId){
             currentCall = apiService.extractor.takeExtractionApp(appId);
             break;
     }
-    currentCall?.then((data) => {
-        console.log('Role: ' + user_role + '\n' + data.data);
+    currentCall?.then(() => {
         document.getElementById("container").dispatchEvent(new CustomEvent('UpdatePage'));
     }).catch((err) => console.log('Err ' + err));
 }

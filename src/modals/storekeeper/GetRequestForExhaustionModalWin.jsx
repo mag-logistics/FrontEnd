@@ -1,6 +1,5 @@
-import '../api/api-client.js'
-import apiClient from '../api/api-client.js'
-import apiService from "../api/api-services.js";
+import '../../api/api-client.js'
+import apiService from "../../api/api-services.js";
 
 function getRequestForExhaustionModalWin(modalItem) {
     let appId = modalItem.content?.['number'];

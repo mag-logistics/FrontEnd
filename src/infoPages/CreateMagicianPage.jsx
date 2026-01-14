@@ -2,7 +2,7 @@ import apiService from "../api/api-services.js";
 import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
-import applicationToRightDict from "../DTO/MagicianDTO/Application.js";
+import applicationToRightDict from "../DTO/Application.js";
 
 function CreateMagicianPage() {
     let [applications, setApplications] = useState([]);
@@ -21,7 +21,6 @@ function CreateMagicianPage() {
 
         let container = containerRef.current;
         container.addEventListener("UpdatePage", () => {
-            console.log('Magic UpdatePage');
             fetchMagicianData()
         })
         fetchMagicianData();

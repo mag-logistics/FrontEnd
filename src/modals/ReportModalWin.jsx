@@ -5,16 +5,16 @@ import downloadReport from "../utils/DownloadReport.js";
 function ReportModalWin(modalItem){
     let reportType = null;
     switch (sessionStorage.getItem("role")) {
-        case 'magician':
+        case 'MAGICIAN':
             reportType = "Magic";
             break;
-        case 'exhaustion':
+        case 'EXTRACTOR':
             reportType = "Hunter";
             break;
-        case 'storekeeper':
+        case 'STOREKEEPER':
             reportType = "Extraction";
             break;
-        case 'hunter':
+        case 'HUNTER':
             reportType = "Hunter";
             break;
     }
@@ -61,27 +61,23 @@ function ReportModalWin(modalItem){
     generateReportBtn.textContent = 'Сгенерировать отчет'
     generateReportBtn.className = 'info_button';
     generateReportBtn.addEventListener("click", () => {
+        let callFunc = null;
         switch (reportTypeSelected) {
             case 'Универсальный':
-                apiService.general.generateFirstReport(user_id, appId, reportType)
-                    .then(res => {
-                        downloadReport(res)
-                        modalItem.modalTeg.dispatchEvent(new CustomEvent('close_event'));
-                    })
-                    .catch(err => console.log(err));
+                callFunc = apiService.general.generateFirstReport(user_id, appId, reportType);
                 break;
             case 'Магический':
-                apiService.general.generateSecondReport(user_id, appId, reportType)
-                    .then(res => {
-                        downloadReport(res);
-                        modalItem.modalTeg.dispatchEvent(new CustomEvent('close_event'));
-                    })
-                    .catch(err => console.log(err));
+                callFunc = apiService.general.generateSecondReport(user_id, appId, reportType);
                 break;
             default:
                 showMessage('Не выбран тип отчета');
                 break;
         }
+
+        callFunc?.then(res => {
+            downloadReport(res)
+            modalItem.modalTeg.dispatchEvent(new CustomEvent('close_event'));
+        }).catch(err => console.log(err));
     })
 
     modalItem["modalBody"].appendChild(reportTypeSelector);

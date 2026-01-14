@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import InfoTableConstruction from "../utils/InfoTableConstruction.jsx";
 import InfoPageHeader from "../utils/InfoPageHeader.jsx";
 import apiService from "../api/api-services.js";
-import hunterApplicationToRightDict from "../DTO/MagicianDTO/HunterApp.js";
+import hunterApplicationToRightDict from "../DTO/HunterApp.js";
 
 function CreateHunterPage() {
     let [app, setApp] = useState([]);

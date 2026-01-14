@@ -23,9 +23,7 @@ async function responseCall(user_role, modalItem) {
             )
             break;
     }
-    callFunc?.then((result) => {
-        console.log(result);
-        console.log('Результат обработки заявки: ' + result.data);
+    callFunc?.then(() => {
         modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
     }).catch((err) => console.log('Err ' + err));
 }
@@ -47,7 +45,6 @@ async function storekeeperCall(appId, reqBtn, resp_btn) {
 async function extractorCall(appId, reqBtn, resp_btn) {
     let checkAnimal = await apiService.extractor.checkMagicAnimalAvailability(appId);
     if (checkAnimal?.data === true) {
-        console.log(checkAnimal.data);
         resp_btn.disabled = false;
         resp_btn.className = "save-btn";
     } else {
@@ -62,14 +59,10 @@ function AdditionalInformationWin(modalItem) {
     let user_role = sessionStorage.getItem('role');
     let appId = modalItem['content']['number'];
     let modal_create = () => {
-        // console.log('create')
-        let event = new CustomEvent('close_event');
-        modalItem["modalTeg"].dispatchEvent(event);
-        console.log(req)
+        modalItem["modalTeg"].dispatchEvent(new CustomEvent('close_event'));
         ModalWindowManager(req, modalItem['content'])
     }
 
-    console.log(modalItem);
     modalItem['modalTitle'].textContent = "Информация о заявке";
     let text = document.createElement("p");
 

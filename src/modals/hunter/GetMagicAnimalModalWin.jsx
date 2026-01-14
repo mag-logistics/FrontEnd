@@ -1,6 +1,6 @@
-import apiService from "../api/api-services.js";
-import animalToRightDict from "../DTO/Animal.js";
-import autoResizeTextarea from "../utils/ResizeFunc.js";
+import apiService from "../../api/api-services.js";
+import animalToRightDict from "../../DTO/Animal.js";
+import autoResizeTextarea from "../../utils/ResizeFunc.js";
 
 function createAddAnimalWin(animals, modalItem){
 
