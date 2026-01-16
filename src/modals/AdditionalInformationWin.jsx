@@ -121,17 +121,17 @@ function AdditionalInformationWin(modalItem) {
         case 'HUNTER':
             apply_btn.style.display = "none";
             resp_btn.style.display = "none";
-            requst_btn.textContent = "Внести информацию о магичесом животном";
+            requst_btn.textContent = "Внести информацию о магическом животном";
             requst_btn.className = "save-btn";
             requst_btn.disabled = false;
             req = 'get_magic_animal';
             break;
         case 'EXTRACTOR':
-            apply_btn.textContent = "Проверить наличие магического существа на складе";
+            apply_btn.textContent = "Проверить наличие требуемых существ";
             apply_btn.addEventListener("click",
                 async() => extractorCall(appId, requst_btn, resp_btn))
             requst_btn.textContent = "Подать заявку на магическое существо";
-            resp_btn.textContent = "Добавить магию"
+            resp_btn.textContent = "Выполнить высасывание"
             req = "request_hunting";
             break;
         case 'STOREKEEPER':

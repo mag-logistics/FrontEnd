@@ -25,7 +25,6 @@ function CreateHunterPage() {
     useEffect(() => {
         let container = containerRef.current;
         container.addEventListener("UpdatePage", () => {
-            console.log('Hunter UpdatePage');
             fetchHunterData();
         })
         fetchHunterData();

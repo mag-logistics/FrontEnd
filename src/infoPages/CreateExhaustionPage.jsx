@@ -29,7 +29,6 @@ function CreateExhaustionPage() {
     useEffect(() => {
         let container = containerRef.current;
         container.addEventListener("UpdatePage", () => {
-            console.log('get UpdatePage');
             fetchExhaustionData()
         })
         fetchExhaustionData();

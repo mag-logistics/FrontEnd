@@ -1,5 +1,4 @@
 function hunterApplicationToRightDict(application) {
-    console.log(application);
     if (application) {
         return  application.map(
             app => {

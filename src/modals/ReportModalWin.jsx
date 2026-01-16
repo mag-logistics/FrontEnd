@@ -15,7 +15,7 @@ function ReportModalWin(modalItem){
             reportType = "Extraction";
             break;
         case 'HUNTER':
-            reportType = "Hunter";
+            reportType = "Hunter1";
             break;
     }
 
@@ -27,7 +27,7 @@ function ReportModalWin(modalItem){
         'Магический'
     ]
 
-    modalItem['modalTitle'] = 'Выбор шаблона отчета'
+    modalItem['modalTitle'].textContent = 'Генерация отчета'
     let reportTypeSelected = null;
 
     let reportTypeSelector = document.createElement("select");

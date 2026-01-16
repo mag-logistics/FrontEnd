@@ -4,7 +4,7 @@ import autoResizeTextarea from "../../utils/ResizeFunc.js";
 
 function CreateRequestWin(animals, modalItem){
     let animalIndexSelected = null;
-
+    modalItem['modalTitle'].textContent = 'Создание заявки на высасывание'
     let animalInfo = document.createElement("textarea");
     animalInfo.readOnly = true;
     animalInfo.style.resize = "none"; // Запретить изменение размера
@@ -85,13 +85,9 @@ function CreateRequestWin(animals, modalItem){
 function AddHuntingRequestWin(modalItem) {
      apiService.general.getAllAnimals()
          .then(data => {
-             let animals = animalToRightDict(data.data);
-             CreateRequestWin(animals, modalItem);
+             CreateRequestWin(animalToRightDict(data.data), modalItem);
          })
          .catch(error => console.log(error))
-
-    modalItem['modalTitle'] = 'Создание заявки на высасывание'
-
 }
 
 export default AddHuntingRequestWin;

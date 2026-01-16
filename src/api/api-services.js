@@ -1,6 +1,5 @@
 import API_ENDPOINTS from "./api-endpoints.js";
 import ApiClient from "./api-client.js";
-import {rhino} from "globals";
 
 class ApiService {
     constructor() {
@@ -265,5 +264,4 @@ class ApiService {
 }
 
 const apiService = new ApiService();
-// await apiService.extractor.getAllApplications('1').then(res => console.log('Then: ' + res.message)).catch(err => console.log('Error: ' + err.message));
 export default apiService;

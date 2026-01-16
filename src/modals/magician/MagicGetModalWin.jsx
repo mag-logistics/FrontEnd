@@ -1,6 +1,8 @@
 import '../../api/api-client.js'
 import apiService from "../../api/api-services.js";
 import showMessage from "../../utils/MessageWindow.js";
+import MagicDTO from "../../DTO/MagicDTO.js";
+import PatternDTO from "../../DTO/PatternDTO.js";
 
 
 function CreateForm(modalItem, magic, patterns) {
@@ -14,11 +16,10 @@ function CreateForm(modalItem, magic, patterns) {
     patternSelectPlaceholder.disabled = true;
     patternSelectPlaceholder.selected = true;
     patternSelector.appendChild(patternSelectPlaceholder);
-    for (let i = 0; i < patterns.length; i++) {
-        let pattern = patterns[i];
+    for (const [key, value] of Object.entries(patterns)) {
         let option = document.createElement("option");
-        option.value = i;
-        option.text = pattern.name;
+        option.value = key;
+        option.text = value.getPatternInfo();
         patternSelector.appendChild(option);
     }
 
@@ -69,10 +70,10 @@ function CreateForm(modalItem, magic, patterns) {
     magicIndexPlaceholder.disabled = true;
     magicIndexPlaceholder.selected = true;
     magicIndex.appendChild(magicIndexPlaceholder);
-    for (let i = 0; i < magic.length; i++) {
+    for (let mag of magic) {
         let option = document.createElement("option");
-        option.value = magic[i].id;
-        option.text = magic[i].name;
+        option.value = mag.id;
+        option.text = mag.getMagicInfo();
         magicIndex.appendChild(option);
     }
 
@@ -82,7 +83,7 @@ function CreateForm(modalItem, magic, patterns) {
     patternSelector.addEventListener("change", (event) => {
         let pattern = patterns[event.target.value];
         let currentMagicIndex = magic.findIndex(mag => mag.id === pattern.magic.id);
-
+        console.log(pattern)
         magicVolume.value = pattern.volume;
         magicEndDate.value = pattern.deadline;
         magicIndex.selectedIndex = currentMagicIndex + 1;
@@ -149,27 +150,11 @@ function OpenMagicGetModalWin(modalItem) {
     Promise.all([magicPromise, patternsPromise])
         .then(([magicData, patternsData]) => {
             let formattedMagic = magicData.data.map(magicItem => {
-                return {
-                    id: magicItem.id,
-                    name: "Тип: " + magicItem?.magicType?.name + " " +
-                        "Цвет: " + magicItem?.magicColour?.name + " " +
-                        "Состояние: " + magicItem?.magicState?.name + " " +
-                        "Мощность: " + magicItem?.magicPower?.name
-                }
+                return new MagicDTO(magicItem);
             })
 
             let formattedPatterns = patternsData.data.map(pattern => {
-                return {
-                    id: pattern.id,
-                    volume: pattern.volume,
-                    deadline: pattern.deadline.split('T')[0],
-                    magic: pattern.magic,
-                    name: "Объем: " + pattern.volume + "\n" +
-                        "Тип: " + pattern?.magic?.magicType?.name + " " +
-                        "Цвет: " + pattern?.magic?.magicColour?.name + " " +
-                        "Состояние: " + pattern?.magic?.magicState?.name + " " +
-                        "Мощность: " + pattern?.magic?.magicPower?.name
-                }
+                return new PatternDTO(pattern);
             })
 
             CreateForm(modalItem, formattedMagic, formattedPatterns);

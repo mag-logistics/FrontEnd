@@ -49,7 +49,7 @@ function LoginPage() {
 
     return (
         <form onSubmit={handleLogin} id='login_form'>
-            <h2>Вход</h2>
+            <h2>Вход в систему</h2>
             <input name="email" type="email" placeholder="Почта" required />
             <input name="password" type="password" placeholder="Пароль" required />
             <button type="submit" className="save-btn">Войти</button>
