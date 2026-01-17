@@ -248,10 +248,10 @@ class ApiService {
                 }
             )
         },
-        processHuntingApplication: async (huntingAppId) => {
+        processHuntingApplication: async (huntingAppId, huntingResult) => {
             return this.client.post(
                 this.endpoints.HUNTER.processHunterApplication(huntingAppId),
-                {},
+                {animals: huntingResult},
                 {
                     headers: {
                         'Authorization': `Bearer ${sessionStorage.getItem('token')}`

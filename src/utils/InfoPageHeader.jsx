@@ -1,7 +1,6 @@
 import ModalWindowManager from "../ModalWindowManager.jsx";
 import {LoginOut} from "../LoginPage.jsx";
 import React from "react";
-import EmployeePage from "../infoPages/EmployeePage.jsx";
 import {useNavigate} from "react-router-dom";
 
 function InfoPageHeader({main_page = true}) {
@@ -19,10 +18,10 @@ function InfoPageHeader({main_page = true}) {
                         >
                             Создать заявку на магию
                         </button>
-                        <button onClick={() => ModalWindowManager('add_new_user', null)}
-                                className="info_button">
-                            Добавить нового пользователя
-                        </button>
+                        {/*<button onClick={() => ModalWindowManager('add_new_user', null)}*/}
+                        {/*        className="info_button">*/}
+                        {/*    Добавить нового пользователя*/}
+                        {/*</button>*/}
                         <button onClick={() => navigate("/worker_manager")}
                                 className="info_button">
                             Список сотрудников

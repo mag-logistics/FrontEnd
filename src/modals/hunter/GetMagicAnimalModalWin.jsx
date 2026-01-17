@@ -114,15 +114,12 @@ function createAddAnimalWin(animals, modalItem){
             }
         );
         if (checked) {
-            // todo realize after back update
-            // apiService.hunter.processHuntingApplication(modalItem['content']['number'])
-            //     .then(() => {
-            //         modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
-            //     })
-            //     .catch(error => console.log(error));
-             console.log(huntingResult)
+            apiService.hunter.processHuntingApplication(modalItem['content']['number'], huntingResult)
+                .then(() => {
+                    modalItem["modalTeg"].dispatchEvent(new CustomEvent("close_event"));
+                })
+                .catch(error => console.log(error));
         } else {
-            console.log(huntingResult)
             showMessage('Не набрано минимальное количество требуемых туш')
         }
     })

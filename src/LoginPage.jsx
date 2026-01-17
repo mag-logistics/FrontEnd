@@ -31,7 +31,7 @@ function LoginPage() {
             .then(res => {
                 let data = res.data;
                 let role = data.roles[0];
-                const expirationTime = Date.now() + (10 * 60 * 1000);
+                const expirationTime = Date.now() + (5 * 60 * 1000);
 
                 sessionStorage.setItem('expire_at', expirationTime.toString());
                 sessionStorage.setItem("role", role);
